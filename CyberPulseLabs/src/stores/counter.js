@@ -5,7 +5,7 @@ export const useAgentes = defineStore('agentes', () => {
   const agentes = ref([]) // Inicialmente vacío, se completa cuando se accede a la view de agentes
   function getAllAgentes() {}
   function createAgente() {
-    // llamada a pi
+    // llamada a api
     // mutación con this.$createAgente() para actualizar estado ?
   }
   function deleteAgente() {}
