@@ -39,8 +39,12 @@ public class OperacionesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<IEnumerable<Operacion>>> PostOperacion(Operacion op)
     {
+        if (op.Id == null) return BadRequest();
+        if (OperacionExists(op.Id)) return UnprocessableEntity();
+        if (op.Id?.Trim() == "")
+            op.Id = op.Nombre + '-' + op.FechaInicio + '-'+ op.FechaFin;
+
         _context.Operaciones.Add(op);
-        op.Id = op.Nombre + '-' + op.FechaInicio + '-'+ op.FechaFin;
         await _context.SaveChangesAsync();
 
         return await GetOperaciones();

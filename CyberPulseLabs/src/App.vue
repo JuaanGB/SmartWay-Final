@@ -10,7 +10,7 @@ import Notificacion from './components/Notificacion.vue';
 
 <template>
     <header>
-        <div id="notificaciones" class="toast toast-top toast-start">
+        <div id="notificaciones" class="toast toast-top toast-start z-10">
             <Notificacion v-for="noti in notifStore.notificaciones" :mensaje="noti.msj" :ms="noti.ms" :tipo="noti.tipo">
             </Notificacion>
         </div>
