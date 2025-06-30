@@ -40,6 +40,7 @@ public class OperacionesController : ControllerBase
     public async Task<ActionResult<IEnumerable<Operacion>>> PostOperacion(Operacion op)
     {
         _context.Operaciones.Add(op);
+        op.Id = op.Nombre + '-' + op.FechaInicio + '-'+ op.FechaFin;
         await _context.SaveChangesAsync();
 
         return await GetOperaciones();

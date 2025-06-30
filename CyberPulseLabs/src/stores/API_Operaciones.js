@@ -14,7 +14,7 @@ export async function _create(id, nombre, estado, inicio, fin) {
         fechaFin: fin
     }
 
-    let res = await fetch(`${uri}/${id}`, {
+    let res = await fetch(`${uri}`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',

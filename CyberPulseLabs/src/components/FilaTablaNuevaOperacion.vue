@@ -12,11 +12,22 @@
     const notiStore = useNotificaciones()
 
     async function createOperacion() {
-        let exito = await opStore.createOperacion(nuevoID, nuevoNombre, nuevoEstado, nuevoInicio, nuevoFin)
+        let exito = await opStore.createOperacion(nuevoID.value, nuevoNombre.value, 
+            nuevoEstado.value, nuevoInicio.value, nuevoFin.value)
         if (exito)
             notiStore.addNotificacion("success", 3000, "Nueva operación añadida correctamente.")
         else
             notiStore.addNotificacion("error", 3000, "Error al crear una operación.")
+
+        flushInputs()
+    }
+
+    function flushInputs() {
+        nuevoID.value = ''
+        nuevoNombre.value = ''
+        nuevoEstado.value = 0
+        nuevoInicio.value = ''
+        nuevoFin.value = ''
     }
 
 </script>
