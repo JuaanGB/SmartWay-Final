@@ -1,5 +1,5 @@
-using CPLAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using CPLAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,13 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddDbContext<CyberPulseContext>(opt => opt.UseInMemoryDatabase("CyberPulse"));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<CyberPulseContext>(options =>
-{
-    options.UseSqlite(
-        builder.Configuration.GetConnectionString("DefaultConnection"));
-});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowVueDev", policy =>
@@ -23,6 +19,7 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+
 
 var app = builder.Build();
 
@@ -34,6 +31,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowVueDev");
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

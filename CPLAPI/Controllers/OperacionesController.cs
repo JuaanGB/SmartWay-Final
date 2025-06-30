@@ -49,7 +49,7 @@ public class OperacionesController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<IEnumerable<Operacion>>> PutOperacion(string id, Operacion newOp)
     {
-        if (id != newOp.Id)
+        if ((id != newOp.Id) || newOp.FechaFin <= newOp.FechaInicio)
             return BadRequest();
 
         var op = await _context.Operaciones.FindAsync(id);
@@ -71,6 +71,19 @@ public class OperacionesController : ControllerBase
             return NotFound();
         }
 
+        return await GetOperaciones();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<IEnumerable<Operacion>>> DeleteOperacion(string id)
+    {
+        var op = await _context.Operaciones.FindAsync(id);
+        if (op == null)
+            return NotFound();
+
+        _context.Operaciones.Remove(op);
+        await _context.SaveChangesAsync();
+        
         return await GetOperaciones();
     }
 
