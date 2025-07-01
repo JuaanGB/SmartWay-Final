@@ -1,8 +1,8 @@
 <script setup>
     import { RouterLink, RouterView } from 'vue-router'
     import Navbar from './components/Navbar.vue'
-import { useNotificaciones } from './stores/counter';
 import Notificacion from './components/Notificacion.vue';
+import { useNotificaciones } from './stores/Notificaciones';
     
     const notifStore = useNotificaciones()
 

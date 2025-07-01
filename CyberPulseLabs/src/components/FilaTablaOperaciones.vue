@@ -1,5 +1,6 @@
 <script setup>
-    import { useNotificaciones, useOperaciones } from '@/stores/counter';
+    import { useOperaciones } from '@/stores/Operaciones';
+    import { useNotificaciones } from '@/stores/Notificaciones';
     import { ref, watch } from 'vue';
 
     const props = defineProps(['id', 'nombre', 'estado', 'inicio', 'fin'])
@@ -30,6 +31,8 @@
             notiStore.addNotificacion("success", 3000, "Operación actualizada correctamente.")
         } else if (nuevoFin <= nuevoInicio)
             notiStore.addNotificacion("error", 3000, "La fecha de fin debe ser posterior a la de inicio.")
+        else if (!nuevoNombre || !nuevoEstado || !nuevoInicio || !nuevoFin)
+            notiStore.addNotificacion("error", 3000, "Todos los campos deben estar completos.")
         else 
             notiStore.addNotificacion("error", 3000, "Error al actualizar la operación.")
         toggleEditMode()

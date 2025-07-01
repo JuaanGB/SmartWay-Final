@@ -4,6 +4,7 @@
     const props = defineProps(['ms','tipo','mensaje'])
     const activa = ref(true)
     onMounted( () => {
+        console.log(props.tipo)
         setTimeout(() => {
             activa.value = !activa.value
         }, props.ms);
@@ -13,7 +14,7 @@
 
 <template>
 
-    <div v-if="activa" class="alert z-100 w-80" :class="'alert-'+props.tipo">
+    <div v-if="activa" :class="['alert', 'z-100', 'w-80', 'alert-' + props.tipo]">
         <span>{{ mensaje }}</span>
     </div>
 

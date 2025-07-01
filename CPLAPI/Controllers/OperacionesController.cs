@@ -42,7 +42,7 @@ public class OperacionesController : ControllerBase
         if (op.Id == null) return BadRequest();
         if (OperacionExists(op.Id)) return UnprocessableEntity();
         if (op.Id?.Trim() == "")
-            op.Id = op.Nombre + '-' + op.FechaInicio + '-'+ op.FechaFin;
+            op.Id = (op.Nombre + '-' + op.FechaInicio + '-'+ op.FechaFin).Replace('/', '-');
 
         _context.Operaciones.Add(op);
         await _context.SaveChangesAsync();

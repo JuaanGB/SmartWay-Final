@@ -1,12 +1,15 @@
 <script setup>
-    import { useNotificaciones, useOperaciones } from '@/stores/counter';
-    import { ref } from 'vue';
+    import { useOperaciones } from '@/stores/Operaciones';
+    import { useNotificaciones } from '@/stores/Notificaciones';
+    import { computed, ref } from 'vue';
 
-    const nuevoID = ref('')
     const nuevoNombre = ref('')
     const nuevoEstado = ref(0)
     const nuevoInicio = ref('')
     const nuevoFin = ref('')
+    const nuevoID = computed( () => {
+        return (nuevoNombre.value + '-' + nuevoInicio.value + '-' + nuevoFin.value).replace('/', '-')
+    })
 
     const opStore = useOperaciones()
     const notiStore = useNotificaciones()
