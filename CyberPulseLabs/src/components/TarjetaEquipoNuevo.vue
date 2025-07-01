@@ -3,6 +3,7 @@ import { useEquipos } from '@/stores/Equipos';
 import { useNotificaciones } from '@/stores/Notificaciones';
 import { useOperaciones } from '@/stores/Operaciones';
 import { onMounted, ref } from 'vue';
+import SelectOperacion from './SelectOperacion.vue';
 
     const opStore = useOperaciones()
     const equipoStore = useEquipos()
@@ -11,14 +12,14 @@ import { onMounted, ref } from 'vue';
     const nuevoNombre = ref('')
     const nuevoID = ref('')
     const nuevaEspecialidad = ref('')
-    let opID = undefined
+    const nuevaOperacionID = ref('')
 
     onMounted( () => {
         opStore.getAllOperaciones()
     })
 
     async function createEquipo() {
-        let exito = await equipoStore.createEquipo(nuevoID.value, nuevoNombre.value, nuevaEspecialidad.value, opID)
+        let exito = await equipoStore.createEquipo(nuevoID.value, nuevoNombre.value, nuevaEspecialidad.value, nuevaOperacionID.value)
         if (exito)
             notiStore.addNotificacion("success", 3000, "Nuevo equipo añadido correctamente.")
         else
@@ -31,7 +32,7 @@ import { onMounted, ref } from 'vue';
         nuevoID.value = ''
         nuevoNombre.value = ''
         nuevaEspecialidad.value = ''
-        opID = undefined
+        nuevaOperacionID.value = ''
     }
 
 </script>
@@ -48,9 +49,7 @@ import { onMounted, ref } from 'vue';
                 <h3 class="card-title">)</h3>
             </div>
             <input class="input w-full" type="text" placeholder="Especialidad" v-model="nuevaEspecialidad">
-            <select class="select w-full">
-                <option v-for="op in opStore.operaciones" @click="opID=op.id">{{ op.nombre }}</option>
-            </select>
+            <SelectOperacion v-model="nuevaOperacionID"></SelectOperacion>
             <button class="btn btn-primary" @click="createEquipo">Añadir equipo</button>
         </div>    
     </div>

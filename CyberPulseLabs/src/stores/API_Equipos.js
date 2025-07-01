@@ -31,6 +31,7 @@ export async function _update(id, nombre, especialidad, operacionID) {
         especialidad: especialidad,
         operacionID: operacionID
     }
+    console.log(item)
 
     let res = await fetch(`${uri}/${id}`, {
         method: "PUT",

@@ -38,6 +38,31 @@ public class EquiposController : ControllerBase
         return await GetEquipos();
     }
 
+    // PUT: api/equipos/{id}
+    [HttpPut("{id}")]
+    public async Task<ActionResult<IEnumerable<Equipo>>> UpdateEquipo(string id, Equipo updatedEquipo)
+    {
+        if (id != updatedEquipo.Id)
+        {
+            return BadRequest("El ID en la URL no coincide con el ID del equipo.");
+        }
+
+        var existingEquipo = await _context.Equipos.FindAsync(id);
+        if (existingEquipo == null)
+        {
+            return NotFound();
+        }
+
+        existingEquipo.Nombre = updatedEquipo.Nombre;
+        existingEquipo.Especialidad = updatedEquipo.Especialidad;
+        existingEquipo.OperacionId = updatedEquipo.OperacionId;
+
+        await _context.SaveChangesAsync();
+
+        return await GetEquipos();
+    }
+
+
     // DELETE: api/equipo/{id}
     [HttpDelete("{id}")]
     public async Task<ActionResult<IEnumerable<Equipo>>> DeleteEquipo(string id)
