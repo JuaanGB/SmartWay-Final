@@ -2,6 +2,7 @@
     import { useOperaciones } from '@/stores/Operaciones';
     import { useNotificaciones } from '@/stores/Notificaciones';
     import { ref, watch } from 'vue';
+import MedallaEstado from './MedallaEstado.vue';
 
     const props = defineProps(['id', 'nombre', 'estado', 'inicio', 'fin'])
     let nuevoNombre = props.nombre
@@ -87,9 +88,7 @@
                 <option :selected="nuevoEstado == 2" @click="nuevoEstado = 2">Completada</option>
             </select>
             <div v-else class="w-full">
-                <div v-if="props.estado == 0" class="badge badge-primary">Planificada</div>
-                <div v-else-if="props.estado == 1" class="badge badge-warning">Activa</div>
-                <div v-else class="badge badge-success">Completada</div>
+                <MedallaEstado :estado="props.estado"></MedallaEstado>
             </div>
         </td>
         <!-- Fecha de inicio -->

@@ -43,14 +43,14 @@ import SelectOperacion from './SelectOperacion.vue';
         <div class="card-body">
             <!-- Información siempre visible -->
             <div class="flex flex-row">
-                <input class="input card-title w-2/3" type="text" placeholder="Nombre equipo" v-model="nuevoNombre">
-                <h3 class="card-title ml-auto">(#</h3>
-                <input class="input card-title w-1/3" type="text" placeholder="ID" v-model="nuevoID">
-                <h3 class="card-title">)</h3>
+                <input class="input card-title w-full" type="text" placeholder="Nombre equipo" v-model="nuevoNombre">
             </div>
             <input class="input w-full" type="text" placeholder="Especialidad" v-model="nuevaEspecialidad">
             <SelectOperacion v-model="nuevaOperacionID"></SelectOperacion>
-            <button class="btn btn-primary" @click="createEquipo">Añadir equipo</button>
+            <button class="btn btn-primary" @click="createEquipo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><!-- Icon from HeroIcons by Refactoring UI Inc - https://github.com/tailwindlabs/heroicons/blob/master/LICENSE --><path fill="currentColor" d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5z"/></svg>
+                Añadir equipo
+            </button>
         </div>    
     </div>
     

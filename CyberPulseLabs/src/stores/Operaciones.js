@@ -33,12 +33,12 @@ export const useOperaciones = defineStore('operaciones', () => {
     }
     async function getOperacion(id) {
         const op = operaciones.value.filter( o => o.id == id)[0]
-        if (!op)
-
-        op = await api._get(id)
+        if (!op) {
+            op = await api._get(id)
+            operaciones.value.push(op)
+        }
         operacionAct.value = op
-        operaciones.value.push(operacionAct)
-
+        
         return operacionAct
     }
     async function createOperacion(id, nombre, estado, inicio, fin) {

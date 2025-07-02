@@ -13,6 +13,8 @@ import TablaOperaciones from '@/components/TablaOperaciones.vue'
     </p>
 
     <FiltrarOperaciones></FiltrarOperaciones>
+
+    <h2 class="text-3xl font-bold mt-8">Listado de operaciones</h2>
     <TablaOperaciones></TablaOperaciones>
   </main>
 </template>

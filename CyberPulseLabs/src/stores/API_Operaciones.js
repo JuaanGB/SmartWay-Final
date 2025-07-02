@@ -9,6 +9,18 @@ export async function _getAll() {
     }
 }
 
+export async function _get(id) {
+    let res = await fetch(`${uri}/${id}`, {
+        method: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(item)
+    })
+    return res
+}
+
 export async function _create(id, nombre, estado, inicio, fin) {
     const item = {
         id: id,
