@@ -1,6 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace CPLAPI.Models;
 
 public class Equipo
@@ -10,5 +7,7 @@ public class Equipo
     public string? Especialidad { get; set; }
     public string? OperacionId { get; set; }
     public virtual Operacion? Operacion { get; set; }
+
+    public virtual IList<Agente>? Agentes { get; }
 
 }

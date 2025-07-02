@@ -12,6 +12,7 @@ import TablaOperaciones from '@/components/TablaOperaciones.vue'
       editándolas, eliminándolas o añadiendo nuevas operaciones de forma sencilla.
     </p>
 
+    <h2 class="text-3xl font-bold mt-8">Búsqueda de operaciones</h2>
     <FiltrarOperaciones></FiltrarOperaciones>
 
     <h2 class="text-3xl font-bold mt-8">Listado de operaciones</h2>

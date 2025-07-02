@@ -51,7 +51,7 @@ import MedallaEstado from './MedallaEstado.vue';
 
 <template>
 
-    <tr>
+    <tr :class="{'bg-success': editModeActive}">
         <th>
             <!-- Botones edición no activa -->
             <div v-if="!editModeActive">
