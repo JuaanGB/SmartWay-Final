@@ -5,6 +5,7 @@ import * as api from './API_Operaciones'
 export const useOperaciones = defineStore('operaciones', () => {
     
     const operaciones = ref([])
+    const operacionAct = ref({})
 
     // Filtros
     function filterOperaciones(nombre, estado, inicio, fin) {
@@ -29,6 +30,16 @@ export const useOperaciones = defineStore('operaciones', () => {
         if (res != false)
             $patchOperaciones(res)
         return res
+    }
+    async function getOperacion(id) {
+        const op = operaciones.value.filter( o => o.id == id)[0]
+        if (!op)
+
+        op = await api._get(id)
+        operacionAct.value = op
+        operaciones.value.push(operacionAct)
+
+        return operacionAct
     }
     async function createOperacion(id, nombre, estado, inicio, fin) {
         const res = await api._create(id, nombre, estado, inicio, fin)
@@ -58,5 +69,6 @@ export const useOperaciones = defineStore('operaciones', () => {
         operaciones.value = res
     }
 
-    return {operaciones, filterOperaciones, getAllOperaciones, createOperacion, deleteOperacion, updateOperaciones}
+    return {operaciones, operacionAct, filterOperaciones, getOperacion,
+        getAllOperaciones, createOperacion, deleteOperacion, updateOperaciones}
 })
