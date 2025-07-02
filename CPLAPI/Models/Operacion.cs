@@ -7,5 +7,6 @@ public class Operacion
     public EstadoOperacion Estado { get; set; }
     public DateOnly FechaInicio { get; set; }
     public DateOnly FechaFin { get; set; }
+    public ICollection<Equipo>? Equipos { get; }
 
 }

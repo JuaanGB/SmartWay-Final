@@ -3,6 +3,7 @@ using System;
 using CPLAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPLAPI.Migrations
 {
     [DbContext(typeof(CyberPulseContext))]
-    partial class CyberPulseContextModelSnapshot : ModelSnapshot
+    [Migration("20250702075903_FixedOperacionRelation")]
+    partial class FixedOperacionRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");

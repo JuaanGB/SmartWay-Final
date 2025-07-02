@@ -77,15 +77,20 @@
         </td>
         <!-- Nombre -->
         <td>
-            <input class="input" type="text" :disabled="!editModeActive" v-model="nuevoNombre">
+            <input class="input color-base-content" type="text" :disabled="!editModeActive" v-model="nuevoNombre">
         </td>
         <!-- Estado -->
         <td>
-            <select class="select" :disabled="!editModeActive">
+            <select v-if="editModeActive" class="select">
                 <option :selected="nuevoEstado == 0" @click="nuevoEstado = 0">Planificada</option>
                 <option :selected="nuevoEstado == 1" @click="nuevoEstado = 1">Activa</option>
                 <option :selected="nuevoEstado == 2" @click="nuevoEstado = 2">Completada</option>
             </select>
+            <div v-else class="w-full">
+                <div v-if="props.estado == 0" class="badge badge-primary">Planificada</div>
+                <div v-else-if="props.estado == 1" class="badge badge-warning">Activa</div>
+                <div v-else class="badge badge-success">Completada</div>
+            </div>
         </td>
         <!-- Fecha de inicio -->
         <td>

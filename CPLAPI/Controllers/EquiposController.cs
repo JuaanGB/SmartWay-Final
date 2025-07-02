@@ -55,7 +55,7 @@ public class EquiposController : ControllerBase
 
         existingEquipo.Nombre = updatedEquipo.Nombre;
         existingEquipo.Especialidad = updatedEquipo.Especialidad;
-        existingEquipo.OperacionId = updatedEquipo.OperacionId;
+        existingEquipo.Operacion = updatedEquipo.Operacion;
 
         await _context.SaveChangesAsync();
 

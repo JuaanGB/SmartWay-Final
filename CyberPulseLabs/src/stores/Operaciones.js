@@ -7,12 +7,28 @@ export const useOperaciones = defineStore('operaciones', () => {
     const operaciones = ref([])
 
     // Filtros
-        
+    function filterOperaciones(nombre, estado, inicio, fin) {
+        operaciones.value = operaciones.value.filter( op => {
+            let res = true
+            if (nombre)
+                res = res && op.nombre.toLowerCase().includes(nombre)
+            if (estado)
+                res = res && (op.estado == estado)
+            if (inicio != '')
+                res = res && (op.fechaInicio >= inicio)
+            if (fin != '')
+                res = res && (op.fechaFin <= fin)
+
+            return res
+        })
+    }
 
     // Operaciones con la API
     async function getAllOperaciones() {
         const res = await api._getAll()
-        $patchOperaciones(res)
+        if (res != false)
+            $patchOperaciones(res)
+        return res
     }
     async function createOperacion(id, nombre, estado, inicio, fin) {
         const res = await api._create(id, nombre, estado, inicio, fin)
@@ -42,5 +58,5 @@ export const useOperaciones = defineStore('operaciones', () => {
         operaciones.value = res
     }
 
-    return {operaciones, getAllOperaciones, createOperacion, deleteOperacion, updateOperaciones}
+    return {operaciones, filterOperaciones, getAllOperaciones, createOperacion, deleteOperacion, updateOperaciones}
 })

@@ -9,27 +9,32 @@ const opStore = useOperaciones()
 const notiStore = useNotificaciones()
 
 onMounted(() => {
-  opStore.getAllOperaciones()
+  if (!opStore.getAllOperaciones())
+      notiStore.addNotificacion("error", 3000, "No se pudo obtener las operaciones.")
 })
 
 function refreshOperaciones() {
-  opStore.getAllOperaciones()
-  notiStore.addNotificacion("success", 3000, "Lista de operaciones actualizada correctamente.")
+  if (opStore.getAllOperaciones())
+    notiStore.addNotificacion("success", 3000, "Lista de operaciones actualizada correctamente.")
+  else
+    notiStore.addNotificacion("error", 3000, "No se pudo obtener las operaciones.")
 }
 
 </script>
 
 <template>
 
-    <button class="btn btn-circle" @click="refreshOperaciones">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M2 12a9 9 0 0 0 9 9c2.39 0 4.68-.94 6.4-2.6l-1.5-1.5A6.7 6.7 0 0 1 11 19c-6.24 0-9.36-7.54-4.95-11.95S18 5.77 18 12h-3l4 4h.1l3.9-4h-3a9 9 0 0 0-18 0"/></svg>
-    </button>
 
     <div class="w-full m-1 overflow-x-auto">
-      <table class="min-w-[600px] table table-zebra max-w-3/4 border rounded-box border-base-content/5">
+      <table class="min-w-[600px] mx-auto table table-zebra max-w-3/4 border rounded-box border-base-content/5">
         <thead class="bg-base-300">
           <tr>
-            <th class="min-w-28"></th> <!-- Vacío para botones -->
+            <th class="min-w-28">
+              <!-- Recargar lista de operaciones -->
+              <button class="btn btn-circle btn-sm btn-outline btn-neutral" @click="refreshOperaciones">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M2 12a9 9 0 0 0 9 9c2.39 0 4.68-.94 6.4-2.6l-1.5-1.5A6.7 6.7 0 0 1 11 19c-6.24 0-9.36-7.54-4.95-11.95S18 5.77 18 12h-3l4 4h.1l3.9-4h-3a9 9 0 0 0-18 0"/></svg>
+              </button>
+            </th> <!-- Vacío para botones -->
             <th>ID</th>
             <th class="min-w-50">Nombre</th>
             <th class="min-w-40">Estado</th>

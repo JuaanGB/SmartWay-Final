@@ -1,8 +1,12 @@
 const uri = 'http://localhost:5152/api/Operaciones'
 
 export async function _getAll() {
-    let res = await fetch(uri)
-    return res.json()
+    try {
+        let res = await fetch(uri)
+        return res.json()
+    } catch (error) {
+        return false
+    }
 }
 
 export async function _create(id, nombre, estado, inicio, fin) {

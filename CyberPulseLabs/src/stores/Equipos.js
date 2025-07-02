@@ -12,12 +12,12 @@ export const useEquipos = defineStore('equipos', () => {
     // Operaciones con la API
     async function getAllEquipos() {
         const res = await api._getAll()
-        $patchEquipos(res)
+        setEquipos(res)
     }
     async function createEquipo(id, nombre, especialidad, operacionID) {
         const res = await api._create(id, nombre, especialidad, operacionID)
         if (res.ok) {
-            $patchEquipos(await res.json())
+            setEquipos(await res.json())
             return true
         }
         return false
@@ -25,7 +25,7 @@ export const useEquipos = defineStore('equipos', () => {
     async function deleteEquipo(id) {
         const res = await api._delete(id)
         if (res.ok) {
-            $patchEquipos(await res.json())
+            setEquipos(await res.json())
             return true
         }
         return false
@@ -33,12 +33,12 @@ export const useEquipos = defineStore('equipos', () => {
     async function updateEquipo(id, nombre, especialidad, operacionID) {
         const res = await api._update(id, nombre, especialidad, operacionID)
         if (res.ok) {
-            $patchEquipos(await res.json())
+            setEquipos(await res.json())
             return true
         }
         return false	
     }
-    function $patchEquipos(res) {
+    function setEquipos(res) {
         equipos.value = res
     }
 

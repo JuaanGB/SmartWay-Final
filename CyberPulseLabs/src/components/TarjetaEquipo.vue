@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import SelectOperacion from './SelectOperacion.vue';
 import { useEquipos } from '@/stores/Equipos';
 import { useNotificaciones } from '@/stores/Notificaciones';
+import MedallaOperacion from './MedallaOperacion.vue';
 
     const props = defineProps(['id', 'nombre', 'especialidad', 'operacionid'])
 
@@ -53,8 +54,8 @@ import { useNotificaciones } from '@/stores/Notificaciones';
 <template>
 
     <div class="join max-lg:join-vertical">
-        <div class="card card-secondary shadow-sm bg-base-300 flex-row max-w-70 join-item">
-            <div class="card-body w-80">
+        <div class="card card-secondary shadow-sm bg-base-300 flex-row join-item">
+            <div class="card-body w-full">
                 <!-- Información siempre visible -->
                 <div class="flex flex-row">
 
@@ -79,7 +80,7 @@ import { useNotificaciones } from '@/stores/Notificaciones';
                 <input v-else class="input input-primary input-sm" type="text" v-model="nuevaEspecialidad">
 
                 <!-- Operación -->
-                <button class="btn badge badge-outline badge-secondary" v-if="!editModeActive" @click="$emit('modal', props.id)">{{ props.operacionid }}</button>
+                <MedallaOperacion v-if="!editModeActive" :id="props.operacionid" :nombre="props.operacionid"></MedallaOperacion>
                 <SelectOperacion v-else v-model="nuevaOperacionid" class="select-secondary select-sm"></SelectOperacion>
 
                 <!-- Boton de guardar cambios-->
@@ -87,17 +88,10 @@ import { useNotificaciones } from '@/stores/Notificaciones';
             </div>    
         </div>
         <!-- Información visible si clica botón de miembros -->
-        <div v-if="visibleMembers" class="w-50 bg-base-200 rounded-box shadow-sm relative join-item h-40 max-lg:w-70">
+        <div v-if="visibleMembers" class="w-full lg:w-50 bg-base-200 rounded-box shadow-sm relative join-item h-40">
             <!-- Lista scrolleable -->
             <ul class="list overflow-y-auto pr-1 max-h-full pb-16">
-                <li class="list-row">Miembro 1</li>
-                <li class="list-row">Miembro 2</li>
-                <li class="list-row">Miembro 3</li>
-                <li class="list-row">Miembro 4</li>
-                <li class="list-row">Miembro 5</li>
-                <li class="list-row">Miembro 6</li>
-                <li class="list-row">Miembro 7</li>
-                <li class="list-row">Miembro 8</li>
+                <li v-for="i in 10" class="list-row h-10">Miembro {{ i }}</li>
             </ul>
 
             <!-- Input fijo abajo -->

@@ -9,7 +9,7 @@ import { useNotificaciones } from './stores/Notificaciones';
 </script>
 
 <template>
-    <header>
+    <header class="sticky top-0 z-10">
         <div id="notificaciones" class="toast toast-top toast-start z-10">
             <Notificacion v-for="noti in notifStore.notificaciones" :mensaje="noti.msj" :ms="noti.ms" :tipo="noti.tipo">
             </Notificacion>
@@ -23,7 +23,7 @@ import { useNotificaciones } from './stores/Notificaciones';
     <section>
         <RouterView />
     </section>
-
+    
 </template>
 
 <style>

@@ -39,13 +39,13 @@ import SelectOperacion from './SelectOperacion.vue';
 
 <template>
 
-    <div class="card card-secondary shadow-sm bg-base-300 flex-row join-item w-100">
+    <div class="card card-secondary shadow-sm bg-base-300 flex-row join-item w-full md:w-100">
         <div class="card-body">
             <!-- Información siempre visible -->
             <div class="flex flex-row">
-                <input class="input card-title w-54" type="text" placeholder="Nombre equipo" v-model="nuevoNombre">
+                <input class="input card-title w-2/3" type="text" placeholder="Nombre equipo" v-model="nuevoNombre">
                 <h3 class="card-title ml-auto">(#</h3>
-                <input class="input card-title w-20" type="text" placeholder="ID" v-model="nuevoID">
+                <input class="input card-title w-1/3" type="text" placeholder="ID" v-model="nuevoID">
                 <h3 class="card-title">)</h3>
             </div>
             <input class="input w-full" type="text" placeholder="Especialidad" v-model="nuevaEspecialidad">
