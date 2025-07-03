@@ -34,6 +34,13 @@ public class OperacionesController : ControllerBase
         return op;
     }
 
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> GetOperacionesCount()
+    {
+        int count = await _context.Operaciones.CountAsync();
+        return count;
+    }
+
     // Estaría elegante que el post devolviese la nueva lista de operaciones, por si alguien más modificó la lista
     // de operaciones al mismo tiempo
     [HttpPost]

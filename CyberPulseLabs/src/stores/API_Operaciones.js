@@ -16,9 +16,19 @@ export async function _get(id) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(item)
     })
     return res
+}
+
+export async function _getCount() {
+    let res = await fetch(`${uri}/count`, {
+        method: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    })
+    return await res.json()
 }
 
 export async function _create(id, nombre, estado, inicio, fin) {

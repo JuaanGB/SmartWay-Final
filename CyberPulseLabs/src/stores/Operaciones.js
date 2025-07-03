@@ -31,6 +31,9 @@ export const useOperaciones = defineStore('operaciones', () => {
             $patchOperaciones(res)
         return res
     }
+    async function getCount() {
+        return await api._getCount()
+    }
     async function getOperacion(id) {
         const op = operaciones.value.filter( o => o.id == id)[0]
         if (!op) {
@@ -69,6 +72,6 @@ export const useOperaciones = defineStore('operaciones', () => {
         operaciones.value = res
     }
 
-    return {operaciones, operacionAct, filterOperaciones, getOperacion,
+    return {operaciones, operacionAct, filterOperaciones, getOperacion, getCount,
         getAllOperaciones, createOperacion, deleteOperacion, updateOperaciones}
 })

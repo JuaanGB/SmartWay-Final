@@ -23,6 +23,12 @@ import { useNotificaciones } from './stores/Notificaciones';
     <section>
         <RouterView />
     </section>
+
+    <footer class="footer sm:footer-horizontal footer-center bg-neutral text-neutral-content p-4 mt-au">
+        <aside>
+            <p>Copyright © - CyberPulseLabs</p>
+        </aside>
+    </footer>
     
 </template>
 

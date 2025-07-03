@@ -5,6 +5,17 @@ export async function _getAll() {
     return res.json()
 }
 
+export async function _getCount() {
+    let res = await fetch(`${uri}/count`, {
+        method: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    })
+    return await res.json()
+}
+
 export async function _create(id, nombre, especialidad, operacionID) {
     const item = {
         id: id,

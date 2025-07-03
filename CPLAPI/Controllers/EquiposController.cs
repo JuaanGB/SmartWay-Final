@@ -23,6 +23,13 @@ public class EquiposController : ControllerBase
             .ToListAsync();
     }
 
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> GetOperacionesCount()
+    {
+        int count = await _context.Equipos.CountAsync();
+        return count;
+    }
+
     // POST: api/equipo
     [HttpPost]
     public async Task<ActionResult<IEnumerable<Equipo>>> CreateEquipo(Equipo equipo) // Interesante el DTO aquí? Omitiendo el ID
