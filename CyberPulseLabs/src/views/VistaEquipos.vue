@@ -20,8 +20,13 @@ onMounted( () => {
 
     <main class="flex flex-col items-center gap-4 m-4">
       	<h2 class="text-3xl font-bold">Gestión de equipos</h2>
+		<p>Desde esta página puedes visualizar el listado de equipos de CyberPulseLabs, permitiendo su total gestión 
+		editándolos, eliminándolos o añadiendo nuevos agentes de forma sencilla.
+		</p>
+		<h2 class="text-3xl font-bold mt-8">Añadir un nuevo equipo</h2>
 		<div class="grid grid-cols-1 lg:grid-cols-3 w-full gap-4">
 			<TarjetaEquipoNuevo class="mx-auto col-span-full"></TarjetaEquipoNuevo>
+			<h2 class="text-3xl font-bold mt-8 col-span-full text-center">Listado de equipos</h2>
 			<TarjetaEquipo class="mx-auto" v-for="eq in equipoStore.equipos" :key="eq.id"
 				:id="eq.id" :nombre="eq.nombre" :especialidad="eq.especialidad" :operacionid="eq.operacionId">
 			</TarjetaEquipo>
