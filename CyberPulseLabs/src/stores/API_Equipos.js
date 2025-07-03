@@ -16,9 +16,8 @@ export async function _getCount() {
     return await res.json()
 }
 
-export async function _create(id, nombre, especialidad, operacionID) {
+export async function _create(nombre, especialidad, operacionID) {
     const item = {
-        id: id,
         nombre: nombre,
         especialidad: especialidad,
         operacionID: operacionID

@@ -17,8 +17,8 @@ export const useEquipos = defineStore('equipos', () => {
     async function getCount() {
         return await api._getCount()
     }
-    async function createEquipo(id, nombre, especialidad, operacionID) {
-        const res = await api._create(id, nombre, especialidad, operacionID)
+    async function createEquipo(nombre, especialidad, operacionID) {
+        const res = await api._create(nombre, especialidad, operacionID)
         if (res.ok) {
             setEquipos(await res.json())
             return true

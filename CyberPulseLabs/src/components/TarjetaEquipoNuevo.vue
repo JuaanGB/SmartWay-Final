@@ -10,7 +10,6 @@ import SelectOperacion from './SelectOperacion.vue';
     const notiStore = useNotificaciones()
 
     const nuevoNombre = ref('')
-    const nuevoID = ref('')
     const nuevaEspecialidad = ref('')
     const nuevaOperacionID = ref('')
 
@@ -19,7 +18,7 @@ import SelectOperacion from './SelectOperacion.vue';
     })
 
     async function createEquipo() {
-        let exito = await equipoStore.createEquipo(nuevoID.value, nuevoNombre.value, nuevaEspecialidad.value, nuevaOperacionID.value)
+        let exito = await equipoStore.createEquipo(nuevoNombre.value, nuevaEspecialidad.value, nuevaOperacionID.value)
         if (exito)
             notiStore.addNotificacion("success", 3000, "Nuevo equipo añadido correctamente.")
         else
@@ -29,7 +28,6 @@ import SelectOperacion from './SelectOperacion.vue';
     }
 
     function flushInputs() {
-        nuevoID.value = ''
         nuevoNombre.value = ''
         nuevaEspecialidad.value = ''
         nuevaOperacionID.value = ''

@@ -32,14 +32,11 @@ public class EquiposController : ControllerBase
 
     // POST: api/equipo
     [HttpPost]
-    public async Task<ActionResult<IEnumerable<Equipo>>> CreateEquipo(Equipo equipo) // Interesante el DTO aquí? Omitiendo el ID
+    public async Task<ActionResult<IEnumerable<Equipo>>> CreateEquipo(EquipoDTO equipo)
     {
-        if (string.IsNullOrEmpty(equipo.Id))
-        {
-            return BadRequest("El ID es obligatorio.");
-        }
-
-        _context.Equipos.Add(equipo);
+        
+        var nuevoEquipo = EquipoDtoToEquipo(equipo);
+        _context.Equipos.Add(nuevoEquipo);
         await _context.SaveChangesAsync();
 
         return await GetEquipos();
@@ -47,7 +44,7 @@ public class EquiposController : ControllerBase
 
     // PUT: api/equipos/{id}
     [HttpPut("{id}")]
-    public async Task<ActionResult<IEnumerable<Equipo>>> UpdateEquipo(string id, Equipo updatedEquipo)
+    public async Task<ActionResult<IEnumerable<Equipo>>> UpdateEquipo(int id, Equipo updatedEquipo)
     {
         if (id != updatedEquipo.Id)
         {
@@ -85,6 +82,17 @@ public class EquiposController : ControllerBase
 
         return await GetEquipos();
     }
+
+    public static Equipo EquipoDtoToEquipo(EquipoDTO dto)
+    {
+        return new Equipo
+        {
+            Nombre = dto.Nombre,
+            Especialidad = dto.Especialidad,
+            OperacionId = dto.OperacionId
+        };
+    }
+
 
 
 

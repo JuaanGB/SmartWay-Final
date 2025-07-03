@@ -3,6 +3,7 @@ using System;
 using CPLAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPLAPI.Migrations
 {
     [DbContext(typeof(CyberPulseContext))]
-    partial class CyberPulseContextModelSnapshot : ModelSnapshot
+    [Migration("20250703103955_EquipoConIDInt")]
+    partial class EquipoConIDInt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
@@ -26,7 +29,10 @@ namespace CPLAPI.Migrations
                     b.Property<bool>("Activo")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("EquipoId")
+                    b.Property<string>("EquipoId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("EquipoId1")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
@@ -37,7 +43,7 @@ namespace CPLAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EquipoId");
+                    b.HasIndex("EquipoId1");
 
                     b.ToTable("Agente");
                 });
@@ -90,7 +96,7 @@ namespace CPLAPI.Migrations
                 {
                     b.HasOne("CPLAPI.Models.Equipo", "Equipo")
                         .WithMany("Agentes")
-                        .HasForeignKey("EquipoId");
+                        .HasForeignKey("EquipoId1");
 
                     b.Navigation("Equipo");
                 });
