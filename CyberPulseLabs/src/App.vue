@@ -11,13 +11,13 @@ import { useNotificaciones } from './stores/Notificaciones';
 <template>
     <header class="sticky top-0 z-10">
         <div id="notificaciones" class="toast toast-top toast-start z-10">
-            <Notificacion v-for="noti in notifStore.notificaciones" :mensaje="noti.msj" :ms="noti.ms" :tipo="noti.tipo">
+            <Notificacion v-for="noti in notifStore.notificaciones" :key="noti.id" :mensaje="noti.msj" :ms="noti.ms" :tipo="noti.tipo">
             </Notificacion>
         </div>
         <Navbar titulo="CyberPulseLabs CRUD">
-            <RouterLink to="/operaciones">Operaciones</RouterLink>
-            <RouterLink to="/equipos">Equipos</RouterLink>
-            <RouterLink to="/agentes">Agentes</RouterLink>
+            <RouterLink class="btn btn-primary btn-ghost rounded-xl" to="/operaciones">Operaciones</RouterLink>
+            <RouterLink class="btn btn-primary btn-ghost rounded-xl" to="/equipos">Equipos</RouterLink>
+            <RouterLink class="btn btn-primary btn-ghost rounded-xl" to="/agentes">Agentes</RouterLink>
         </Navbar>
     </header>
     <section>

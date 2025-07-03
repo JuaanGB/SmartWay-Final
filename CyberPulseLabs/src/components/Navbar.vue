@@ -1,5 +1,8 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+
     const props = defineProps(['titulo'])
+    const mobileMenuVisible = ref(false)
 
     function cambiarTema() {
         const html = document.documentElement;
@@ -16,13 +19,56 @@
         }
     }
 
+    function toggleMenuMobile() {
+        mobileMenuVisible.value = !mobileMenuVisible.value
+    }
+
+    onMounted( () => {
+        const dark = "dark"
+        const light = "acid"
+        const elementoTema = document.getElementById("tema")
+
+        if (localStorage.theme === undefined) {
+            if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.setAttribute("data-theme", dark);
+                // localStorage.theme = "dark"; // Comentada para sólo guardar la preferencia del usuario cuando haga clic
+                elementoTema.checked = false;
+            } else {
+                document.documentElement.setAttribute("data-theme", light);
+                // localStorage.theme = "nord";
+                elementoTema.checked = true;
+            }
+        } else if (localStorage.theme === dark) {
+            document.documentElement.setAttribute("data-theme", dark);
+            elementoTema.checked = false;
+        } else {
+            document.documentElement.setAttribute("data-theme", light);
+            elementoTema.checked = true;
+        }
+    })
+
 </script>
 
 <template>
 
-    <nav class="navbar bg-primary shadow-sm">
-        <RouterLink to="/" class="navbar-start text-white">{{ titulo }}</RouterLink>
-        <div class="navbar-center gap-4 text-white hover:bg-primary-100">
+    <nav class="navbar bg-primary shadow-sm text-white">
+        <div class="navbar-start">
+            <div class="block md:hidden">
+                <details>
+                    <summary class="btn btn-primary p-1 rounded-md btn-ghost" @click="toggleMenuMobile">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+                    </summary>
+                </details>
+                <ul v-show="mobileMenuVisible" class="menu dropdown-content bg-primary text-white rounded-box z-[1000] w-52 p-2 shadow-sm absolute top-18">
+                    <li><slot></slot></li>
+                </ul>
+            </div>
+            
+            
+            <RouterLink class="btn btn-primary btn-ghost rounded-xl text-lg" to="/">{{ titulo }}</RouterLink>
+        </div>
+        
+        <div class="hidden md:block navbar-center gap-4 text-white hover:bg-primary-100">
             <slot></slot>
         </div>
         <div class="navbar-end">

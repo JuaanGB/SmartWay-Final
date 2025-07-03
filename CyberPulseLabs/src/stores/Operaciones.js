@@ -15,10 +15,12 @@ export const useOperaciones = defineStore('operaciones', () => {
                 res = res && op.nombre.toLowerCase().includes(nombre)
             if (estado)
                 res = res && (op.estado == estado)
-            if (inicio != '')
-                res = res && (op.fechaInicio >= inicio)
-            if (fin != '')
-                res = res && (op.fechaFin <= fin)
+            if (inicio && fin) // Si tengo inicio y fin, filtro operaciones dentro del rango [inicio, fin]
+                res = res && (op.fechaInicio >= inicio && op.fechaFin <= fin);
+            else if (inicio) // Si solo inicio, filtro operaciones con fechaInicio >= inicio
+                res = res && (op.fechaInicio >= inicio);
+            else if (fin) // Si solo fin, filtro operaciones con fechaFin <= fin
+                res = res && (op.fechaFin <= fin);
 
             return res
         })

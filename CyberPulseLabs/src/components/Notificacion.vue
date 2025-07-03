@@ -14,7 +14,8 @@
 
 <template>
 
-    <div v-if="activa" :class="['alert', 'z-100', 'w-80', 'alert-' + props.tipo]">
+    <div v-if="activa" role="alert" class="alert z-[100] w-80" :class="{'alert-success': props.tipo == 'success',
+        'alert-error': props.tipo == 'error'}">
         <span>{{ mensaje }}</span>
     </div>
 
