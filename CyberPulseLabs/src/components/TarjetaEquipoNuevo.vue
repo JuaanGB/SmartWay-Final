@@ -37,7 +37,7 @@ import SelectOperacion from './SelectOperacion.vue';
 
 <template>
 
-    <div class="card card-secondary shadow-sm bg-base-300 flex-row join-item w-full md:w-100">
+    <div class="card card-secondary shadow-md bg-base-300 flex-row join-item w-full md:w-100">
         <div class="card-body">
             <!-- Información siempre visible -->
             <div class="flex flex-row">

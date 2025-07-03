@@ -54,7 +54,7 @@ import MedallaOperacion from './MedallaOperacion.vue';
 <template>
 
     <div class="join max-lg:join-vertical">
-        <div class="card card-secondary shadow-sm bg-base-300 flex-row join-item">
+        <div class="card card-secondary shadow-md bg-base-300 flex-row join-item">
             <div class="card-body w-full">
                 <!-- Información siempre visible -->
                 <div class="flex flex-row">
