@@ -26,7 +26,7 @@ function refreshOperaciones() {
 
 
     <div class="w-full m-1 overflow-x-auto">
-      <table class="min-w-[600px] mx-auto table table-zebra max-w-3/4 border rounded-box border-base-content/5">
+      <table class="min-w-[600px] mx-auto table max-w-3/4 border rounded-box border-base-content/5">
         <thead class="bg-base-300">
           <tr>
             <th class="min-w-28">

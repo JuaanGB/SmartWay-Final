@@ -19,7 +19,6 @@ export const useEquipos = defineStore('equipos', () => {
         let eq = null
         if (loadingAllEquipos.value == false) {
             eq = equipos.value.find( e => e.id == id)
-            console.log(eq)
             if (!eq) {
                 eq = await api._get(id)
                 equipos.value.push(eq)

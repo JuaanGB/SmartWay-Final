@@ -56,7 +56,7 @@ import { useEditMode } from '@/composables/editMode';
 <template>
 
     <div class="join max-lg:join-vertical">
-        <div class="card card-secondary shadow-md bg-base-300 flex-row join-item">
+        <div class="card card-secondary shadow-md bg-base-300 flex-row join-item w-90 h-40">
             <div class="card-body w-full">
                 <!-- Información siempre visible -->
                 <div class="flex flex-row">

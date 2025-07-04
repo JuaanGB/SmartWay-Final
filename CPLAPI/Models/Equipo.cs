@@ -8,6 +8,6 @@ public class Equipo
     public string? OperacionId { get; set; }
     public virtual Operacion? Operacion { get; set; }
 
-    public virtual IList<Agente>? Agentes { get; }
+    public IList<Agente>? Agentes { get; }
 
 }

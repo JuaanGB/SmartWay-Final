@@ -12,7 +12,13 @@ import SelectEquipo from './SelectEquipo.vue';
     const notiStore = useNotificaciones()
 
     const props = defineProps(['id','nombre','rango','activo','equipoId'])
-    const { editModeActive, toggleEditMode } = useEditMode()
+    const { editModeActive, toggleEditMode } = useEditMode(() => {
+        nuevoNombre.value = props.nombre
+        nuevoRango.value = props.rango
+        nuevoEstado.value = props.activo
+        nuevoEquipoId.value = props.equipoId
+        console.log("Fin del modo edición:" + nuevoEquipoId.value)
+    })
 
     const nuevoNombre = ref(props.nombre)
     const nuevoRango = ref(props.rango)
@@ -29,10 +35,31 @@ import SelectEquipo from './SelectEquipo.vue';
             notiStore.addNotificacion("error", 3000, "Error al eliminar el agente.")
     }
 
+    async function saveChanges() {
+        let exito = await agStore.updateAgente(props.id, nuevoNombre.value, nuevoEstado.value,
+            nuevoEquipoId.value, nuevoRango.value)
+        if (exito)
+            notiStore.addNotificacion("success", 3000, "Agente actualizado correctamente.")
+        else 
+            notiStore.addNotificacion("error", 3000, "Error al actualizar la operación.")
+
+        toggleEditMode()
+    }
+
+    // Necesario para q se muestre el nombre cuando se añade un nuevo agente
+    onMounted( async () => {
+        const res = await eqStore.getEquipo(props.equipoId)
+        nuevoEquipoNombre.value = res?.nombre
+    })
+
     watch(() => eqStore.loadingAllEquipos, async () => {
         const res = await eqStore.getEquipo(props.equipoId)
         nuevoEquipoNombre.value = res?.nombre
     })
+
+    function updateNuevoEquipo(id) {
+        nuevoEquipoId.value = id
+    }
 
 </script>
 
@@ -55,12 +82,12 @@ import SelectEquipo from './SelectEquipo.vue';
                 <!-- Activo / inactivo -->
                 <ActividadAgente :estado="props.activo"></ActividadAgente>
 
-                <div class="flex flex-col items-center mt-4">
+                <div class="flex flex-col items-center mt-4 text-center">
                     <!-- Equipo -->
                     <p>{{ nuevoEquipoNombre }}</p>
 
                     <!-- Rango -->
-                    <p class="text-gray-400">{{ props.rango }}</p>
+                    <p class="text-gray-400 text-center">{{ props.rango }}</p>
                 </div>
 
                 <!-- Botón de editar -->
@@ -89,14 +116,14 @@ import SelectEquipo from './SelectEquipo.vue';
 
                 <div class="flex flex-col items-center gap-2">
                     <!-- Equipo -->
-                    <SelectEquipo class="select-sm" :default="nuevoEquipoNombre"></SelectEquipo>
+                    <SelectEquipo @update-nuevo-equipo="(id) => updateNuevoEquipo(id)" class="select-sm" :default="nuevoEquipoNombre"></SelectEquipo>
 
                     <!-- Rango -->
                     <input class="input input-sm w-full" type="text" v-model="nuevoRango" placeholder="Rango">
                 </div>
 
                 <!-- Botón de guardar cambios -->
-                <button class="btn btn-primary btn-circle btn-sm absolute top-2 left-2">
+                <button @click="saveChanges" class="btn btn-primary btn-circle btn-sm absolute top-2 left-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M15 9H5V5h10m-3 14a3 3 0 0 1-3-3a3 3 0 0 1 3-3a3 3 0 0 1 3 3a3 3 0 0 1-3 3m5-16H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7z"/></svg>
                 </button>
                 <!-- Botón de salir de la edición -->

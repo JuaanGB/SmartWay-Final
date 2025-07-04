@@ -3,11 +3,11 @@ import { useEquipos } from '@/stores/Equipos';
 import { onMounted, ref, watch } from 'vue';
 
     const props = defineProps(['default'])
-    const emit = defineEmits(['updateNuevoEquipo'])
+    const emits = defineEmits(['updateNuevoEquipo'])
     const eqStore = useEquipos()
     const idAct = ref(0)
 
-    watch(idAct, () => emit('updateNuevoEquipo', idAct.value))
+    watch(idAct, () => emits('updateNuevoEquipo', idAct.value))
 
 </script>
 
