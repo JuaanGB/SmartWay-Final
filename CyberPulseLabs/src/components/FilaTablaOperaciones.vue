@@ -3,6 +3,7 @@
     import { useNotificaciones } from '@/stores/Notificaciones';
     import { ref, watch } from 'vue';
 import MedallaEstado from './MedallaEstado.vue';
+import { useEditMode } from '@/composables/editMode';
 
     const props = defineProps(['id', 'nombre', 'estado', 'inicio', 'fin'])
     let nuevoNombre = props.nombre
@@ -13,13 +14,7 @@ import MedallaEstado from './MedallaEstado.vue';
     const opStore = useOperaciones()
     const notiStore = useNotificaciones()
 
-    const editModeActive = ref(false)
-
-    function toggleEditMode() {
-        editModeActive.value = !editModeActive.value
-    }
-
-    watch(editModeActive, () => {
+    const {editModeActive, toggleEditMode} = useEditMode(() => {
         nuevoNombre = props.nombre
         nuevoEstado = props.estado
         nuevoInicio = props.inicio

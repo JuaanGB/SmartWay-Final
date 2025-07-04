@@ -4,11 +4,11 @@ import SelectOperacion from './SelectOperacion.vue';
 import { useEquipos } from '@/stores/Equipos';
 import { useNotificaciones } from '@/stores/Notificaciones';
 import MedallaOperacion from './MedallaOperacion.vue';
+import { useEditMode } from '@/composables/editMode';
 
     const props = defineProps(['id', 'nombre', 'especialidad', 'operacionid'])
 
     const visibleMembers = ref(false)
-    const editModeActive = ref(false)
 
     const equipoStore = useEquipos()
     const notiStore = useNotificaciones()
@@ -17,12 +17,14 @@ import MedallaOperacion from './MedallaOperacion.vue';
     const nuevaEspecialidad = ref(props.especialidad)
     const nuevaOperacionid = ref(props.operacionid)
 
+    const { editModeActive, toggleEditMode } = useEditMode( () => {
+        nuevoNombre.value = props.nombre
+        nuevaEspecialidad.value = props.especialidad
+        nuevaOperacionid.value = props.operacionid
+    })
+
     function toggleMembers() {
         visibleMembers.value = !visibleMembers.value
-    }
-
-    function toggleEditMode() {
-        editModeActive.value = !editModeActive.value
     }
 
     function addMember() {
