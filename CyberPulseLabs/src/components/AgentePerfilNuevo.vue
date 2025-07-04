@@ -15,7 +15,7 @@ import ActividadAgente from './ActividadAgente.vue';
 
 <template>
 
-    <div class="card bg-base-200 border border-2 border-primary shadow-md w-50">
+    <div class="card bg-base-200 border border-2 border-primary shadow-md w-50 h-70">
         <div class="card-body items-center">
             <!-- Avatar del nombre -->
             <div class="avatar avatar-placeholder">

@@ -15,7 +15,7 @@
 
 <template>
 
-    <div class="card bg-base-200 border border-primary shadow-md w-50">
+    <div class="card bg-base-200 border border-primary shadow-md w-50 h-70 content-center">
         <div class="card-body items-center justify-center">
             <!-- Avatar del nombre -->
             <div class="avatar avatar-placeholder">

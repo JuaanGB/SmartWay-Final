@@ -1,11 +1,12 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
-import * as api from './API_Operaciones'
+import { API } from "./API"
 
 export const useOperaciones = defineStore('operaciones', () => {
     
     const operaciones = ref([])
     const operacionAct = ref({})
+    const api = new API('http://localhost:5152/api/Operaciones')
 
     // Filtros
     function filterOperaciones(nombre, estado, inicio, fin) {
@@ -47,7 +48,7 @@ export const useOperaciones = defineStore('operaciones', () => {
         return operacionAct
     }
     async function createOperacion(id, nombre, estado, inicio, fin) {
-        const res = await api._create(id, nombre, estado, inicio, fin)
+        const res = await api._create(attributesToItem(id, nombre, estado, inicio, fin))
         if (res.ok) {
             $patchOperaciones(await res.json())
             return true
@@ -63,7 +64,7 @@ export const useOperaciones = defineStore('operaciones', () => {
         return false
     }
     async function updateOperaciones(id, nombre, estado, inicio, fin) {
-        const res = await api._update(id, nombre, estado, inicio, fin)
+        const res = await api._update(attributesToItem(id, nombre, estado, inicio, fin))
         if (res.ok) {
             $patchOperaciones(await res.json())
             return true
@@ -72,6 +73,15 @@ export const useOperaciones = defineStore('operaciones', () => {
     }
     function $patchOperaciones(res) {
         operaciones.value = res
+    }
+    function attributesToItem(id, nombre, estado, inicio, fin) {
+        return {
+            id: id,
+            nombre: nombre,
+            estado: estado,
+            fechaInicio: inicio,
+            fechaFin: fin
+        }
     }
 
     return {operaciones, operacionAct, filterOperaciones, getOperacion, getCount,

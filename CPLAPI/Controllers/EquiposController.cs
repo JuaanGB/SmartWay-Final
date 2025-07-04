@@ -69,7 +69,7 @@ public class EquiposController : ControllerBase
 
     // DELETE: api/equipo/{id}
     [HttpDelete("{id}")]
-    public async Task<ActionResult<IEnumerable<Equipo>>> DeleteEquipo(string id)
+    public async Task<ActionResult<IEnumerable<Equipo>>> DeleteEquipo(int id)
     {
         var equipo = await _context.Equipos.FindAsync(id);
         if (equipo == null)
