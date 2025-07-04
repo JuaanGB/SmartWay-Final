@@ -5,20 +5,27 @@ import { API } from '@/stores/API'
 export const useEquipos = defineStore('equipos', () => {
     
     const equipos = ref([])
-    const api = new API('http://localhost:5152/api/Equipos')        
+    const api = new API('http://localhost:5152/api/Equipos')      
+    const loadingAllEquipos = ref(false)  
 
     // Operaciones con la API
     async function getAllEquipos() {
+        loadingAllEquipos.value = true
         const res = await api._getAll()
         setEquipos(res)
+        loadingAllEquipos.value = false
     }
     async function getEquipo(id) {
-        let eq = equipos.value.find( e => e.id == id)
-        console.log(eq)
-        if (!eq) {
-            eq = await api._get(id)
-            equipos.value.push(eq)
+        let eq = null
+        if (loadingAllEquipos.value == false) {
+            eq = equipos.value.find( e => e.id == id)
+            console.log(eq)
+            if (!eq) {
+                eq = await api._get(id)
+                equipos.value.push(eq)
+            }
         }
+        
         return eq
     }
     async function getCount() {
@@ -61,5 +68,5 @@ export const useEquipos = defineStore('equipos', () => {
         return equipo
     }
 
-    return {equipos, getAllEquipos, getEquipo, getCount, createEquipo, deleteEquipo, updateEquipo}
+    return {equipos, loadingAllEquipos, getAllEquipos, getEquipo, getCount, createEquipo, deleteEquipo, updateEquipo}
 })

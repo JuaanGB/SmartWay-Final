@@ -10,7 +10,7 @@ import SelectEquipo from './SelectEquipo.vue';
 
     const nombre = ref('')
     const activo = ref(false)
-    const equipoId = ref('')
+    const equipoId = ref(0)
     const rango = ref('')
     const inicial = computed(() => {
         return nombre.value[0]
@@ -50,7 +50,7 @@ import SelectEquipo from './SelectEquipo.vue';
             <!-- Activo / inactivo -->
             <div class="flex flex-row gap-2">
                 <input class="checkbox" type="checkbox" v-model="activo">
-                <ActividadAgente :estado="activo"></ActividadAgente>
+                <ActividadAgente :estado="activo" value=""></ActividadAgente>
             </div>
             
 

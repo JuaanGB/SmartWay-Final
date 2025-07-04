@@ -8,8 +8,9 @@ import { onMounted } from 'vue';
 const eqStore = useEquipos()
 const agStore = useAgentes()
 
-onMounted( () => {
+onMounted(async () => {
   agStore.getAllAgentes()
+  eqStore.getAllEquipos()
 })
 
 </script>

@@ -1,10 +1,11 @@
 <script setup>
-    import { onMounted, ref } from 'vue';
+    import { onMounted, ref, watch } from 'vue';
     import ActividadAgente from './ActividadAgente.vue';
     import { useEditMode } from '@/composables/editMode';
 import { useEquipos } from '@/stores/Equipos';
 import { useAgentes } from '@/stores/Agentes';
 import { useNotificaciones } from '@/stores/Notificaciones';
+import SelectEquipo from './SelectEquipo.vue';
 
     const eqStore = useEquipos()
     const agStore = useAgentes()
@@ -18,6 +19,8 @@ import { useNotificaciones } from '@/stores/Notificaciones';
     const nuevoEstado = ref(props.activo)
     const nuevoEquipoId = ref(props.equipoId)
 
+    const nuevoEquipoNombre = ref('Equipo')
+
     async function deleteAgente() {
         let exito = await agStore.deleteAgente(props.id)
         if (exito)
@@ -25,6 +28,12 @@ import { useNotificaciones } from '@/stores/Notificaciones';
         else
             notiStore.addNotificacion("error", 3000, "Error al eliminar el agente.")
     }
+
+    watch(() => eqStore.loadingAllEquipos, async () => {
+        const res = await eqStore.getEquipo(props.equipoId)
+        nuevoEquipoNombre.value = res?.nombre
+    })
+
 </script>
 
 <template>
@@ -32,7 +41,7 @@ import { useNotificaciones } from '@/stores/Notificaciones';
     <div class="card bg-base-200 border border-primary shadow-md w-50 h-70 content-center">
         <div class="card-body items-center justify-center">
             <!-- Avatar del nombre -->
-            <div class="avatar avatar-placeholder">
+            <div class="avatar avatar-placeholder mb-4">
                 <div class="bg-neutral text-neutral-content w-16 rounded-full">
                     <span class="text-xl font-bold">{{ nuevoNombre[0] }}</span>
                 </div>
@@ -46,9 +55,9 @@ import { useNotificaciones } from '@/stores/Notificaciones';
                 <!-- Activo / inactivo -->
                 <ActividadAgente :estado="props.activo"></ActividadAgente>
 
-                <div class="flex flex-col items-center">
+                <div class="flex flex-col items-center mt-4">
                     <!-- Equipo -->
-                    <p>{{ props.equipoId }}</p>
+                    <p>{{ nuevoEquipoNombre }}</p>
 
                     <!-- Rango -->
                     <p class="text-gray-400">{{ props.rango }}</p>
@@ -80,9 +89,7 @@ import { useNotificaciones } from '@/stores/Notificaciones';
 
                 <div class="flex flex-col items-center gap-2">
                     <!-- Equipo -->
-                    <select class="select select-sm w-full" v-model="nuevoEquipoId" placeholder="Equipo">
-
-                    </select>
+                    <SelectEquipo class="select-sm" :default="nuevoEquipoNombre"></SelectEquipo>
 
                     <!-- Rango -->
                     <input class="input input-sm w-full" type="text" v-model="nuevoRango" placeholder="Rango">
