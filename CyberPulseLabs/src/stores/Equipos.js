@@ -12,6 +12,15 @@ export const useEquipos = defineStore('equipos', () => {
         const res = await api._getAll()
         setEquipos(res)
     }
+    async function getEquipo(id) {
+        let eq = equipos.value.find( e => e.id == id)
+        console.log(eq)
+        if (!eq) {
+            eq = await api._get(id)
+            equipos.value.push(eq)
+        }
+        return eq
+    }
     async function getCount() {
         return await api._getCount()
     }
@@ -49,9 +58,8 @@ export const useEquipos = defineStore('equipos', () => {
             especialidad: especialidad,
             operacionID: operacionID
         }
-        console.log(equipo)
         return equipo
     }
 
-    return {equipos, getAllEquipos, getCount, createEquipo, deleteEquipo, updateEquipo}
+    return {equipos, getAllEquipos, getEquipo, getCount, createEquipo, deleteEquipo, updateEquipo}
 })

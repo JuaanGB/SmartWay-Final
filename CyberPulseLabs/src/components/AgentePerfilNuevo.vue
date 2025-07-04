@@ -1,6 +1,12 @@
 <script setup>
 import { computed, ref } from 'vue';
 import ActividadAgente from './ActividadAgente.vue';
+import { useAgentes } from '@/stores/Agentes';
+import { useNotificaciones } from '@/stores/Notificaciones';
+import SelectEquipo from './SelectEquipo.vue';
+
+    const agStore = useAgentes()
+    const notiStore = useNotificaciones()
 
     const nombre = ref('')
     const activo = ref(false)
@@ -9,6 +15,20 @@ import ActividadAgente from './ActividadAgente.vue';
     const inicial = computed(() => {
         return nombre.value[0]
     })
+
+    async function addAgente() {
+        const exito = await agStore.createAgente(nombre.value, activo.value, equipoId.value, rango.value)
+        if (exito)
+            notiStore.addNotificacion("success", 3000, "Agente añadido correctamente.")
+        else if (!nombre.value || !activo.value || !rango.value)
+            notiStore.addNotificacion("error", 3000, "Debes completar todos los campos.")
+        else 
+            notiStore.addNotificacion("error", 3000, "Error al añadir un agente.")
+    }
+
+    function updateNuevoEquipo(id) {
+        equipoId.value = id
+    }
 
 
 </script>
@@ -36,15 +56,13 @@ import ActividadAgente from './ActividadAgente.vue';
 
             <div class="flex flex-col items-center gap-2">
                 <!-- Equipo -->
-                <select class="select select-sm w-full" v-model="equipoId" placeholder="Equipo">
-
-                </select>
+                <SelectEquipo class="select-sm" @update-nuevo-equipo="(id) => updateNuevoEquipo(id)"></SelectEquipo>
 
                 <!-- Rango -->
                 <input class="input input-sm w-full" type="text" v-model="rango" placeholder="Rango">
             </div>
 
-            <button class="btn btn-primary btn-circle btn-sm absolute top-2 right-2">
+            <button @click="addAgente" class="btn btn-primary btn-circle btn-sm absolute top-2 right-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M15 9H5V5h10m-3 14a3 3 0 0 1-3-3a3 3 0 0 1 3-3a3 3 0 0 1 3 3a3 3 0 0 1-3 3m5-16H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7z"/></svg>
             </button>
 

@@ -1,6 +1,16 @@
 <script setup>
 import AgentePerfil from '@/components/AgentePerfil.vue';
 import AgentePerfilNuevo from '@/components/AgentePerfilNuevo.vue';
+import { useAgentes } from '@/stores/Agentes';
+import { useEquipos } from '@/stores/Equipos';
+import { onMounted } from 'vue';
+
+const eqStore = useEquipos()
+const agStore = useAgentes()
+
+onMounted( () => {
+  agStore.getAllAgentes()
+})
 
 </script>
 
@@ -14,7 +24,8 @@ import AgentePerfilNuevo from '@/components/AgentePerfilNuevo.vue';
 
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
       <AgentePerfilNuevo></AgentePerfilNuevo>
-      <AgentePerfil v-for="i in 10" id="1" nombre="Pepito" :activo="i % 2 == 0 ? true : false" equipo-id="elquesea" rango="Jefe de personal"></AgentePerfil>
+      <AgentePerfil v-for="ag in agStore.agentes" :key="ag.id" :id="ag.id" :activo="ag.activo" 
+        :nombre="ag.nombre" :rango="ag.rango" :equipo-id="ag.equipoId"></AgentePerfil>
     </div>
   </main>
 </template>

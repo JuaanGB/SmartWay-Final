@@ -4,7 +4,6 @@
     const props = defineProps(['ms','tipo','mensaje'])
     const activa = ref(true)
     onMounted( () => {
-        console.log(props.tipo)
         setTimeout(() => {
             activa.value = !activa.value
         }, props.ms);

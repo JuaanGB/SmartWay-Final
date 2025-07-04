@@ -1,4 +1,5 @@
 <script setup>
+import { useAgentes } from '@/stores/Agentes';
 import { useEquipos } from '@/stores/Equipos';
 import { useOperaciones } from '@/stores/Operaciones';
 import { onMounted, ref } from 'vue';
@@ -8,7 +9,7 @@ const opStore = useOperaciones()
 const totalOp = ref(null)
 const eqStore = useEquipos()
 const totalEq = ref(null)
-const agStore = null // useAgentes
+const agStore = useAgentes()
 const totalAg = ref(null)
 
 onMounted(async () => {

@@ -23,6 +23,16 @@ public class EquiposController : ControllerBase
             .ToListAsync();
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Equipo>> GetEquipo(int id)
+    {
+        var eq = await _context.Equipos.FindAsync(id);
+        if (eq == null)
+            return NotFound();
+
+        return eq;
+    }
+
     [HttpGet("count")]
     public async Task<ActionResult<int>> GetOperacionesCount()
     {

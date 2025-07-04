@@ -23,7 +23,7 @@ export class API {
                 'Content-Type': 'application/json'
             },
         })
-        return res
+        return res.json()
     }
 
     async _getCount() {
