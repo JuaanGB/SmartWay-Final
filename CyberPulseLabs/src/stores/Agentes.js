@@ -40,7 +40,7 @@ export const useAgentes = defineStore('agentes', () => {
     }
 
     async function createAgente(nombre, estado, equipoId, rango) {
-        equipoId = !equipoId ? null : equipoId
+        equipoId = !equipoId ? null : equipoId // Necesario porque si no la API busca un id con clave ""
         const res = await api._create(
             attributesToItem(undefined,nombre, estado, equipoId, rango))
         if (res.ok) {

@@ -43,7 +43,10 @@ import SelectEquipo from './SelectEquipo.vue';
 
         let exito = await agStore.updateAgente(props.id, nuevoNombre.value, nuevoEstado.value,
             nuevoEquipoId.value, nuevoRango.value)
-        nuevoEquipoNombre.value = (await eqStore.getEquipo(nuevoEquipoId.value)).nombre
+
+        if (nuevoEquipoNombre.value)
+            nuevoEquipoNombre.value = (await eqStore.getEquipo(nuevoEquipoId.value)).nombre
+        
         if (exito)
             notiStore.addNotificacion("success", 3000, "Agente actualizado correctamente.")
         else 
@@ -71,7 +74,7 @@ import SelectEquipo from './SelectEquipo.vue';
 
 <template>
 
-    <div class="card bg-base-200 border border-primary shadow-md w-50 h-70 content-center">
+    <div class="card bg-base-200 border border-primary shadow-md w-50 h-70 content-center shadow-md">
         <div class="card-body items-center justify-center">
             <!-- Avatar del nombre -->
             <div class="avatar avatar-placeholder mb-4">

@@ -60,8 +60,8 @@ import { useEditMode } from '@/composables/editMode';
 
 <template>
 
-    <div class="join max-lg:join-vertical">
-        <div class="card card-secondary shadow-md bg-base-200 flex-row join-item w-full md:w-90 h-42">
+    <div class="join max-lg:join-vertical max-sm:w-full h-auto">
+        <div class="card card-secondary shadow-md bg-base-200 flex-row join-item w-full md:w-90">
             <div class="card-body w-full">
                 <!-- Información siempre visible -->
                 <div class="flex flex-col relative">
@@ -90,7 +90,7 @@ import { useEditMode } from '@/composables/editMode';
                 <input v-else class="input input-primary input-sm" type="text" v-model="nuevaEspecialidad">
 
                 <!-- Operación -->
-                <MedallaOperacion v-if="!editModeActive" :id="props.operacionid" :nombre="props.operacionid"></MedallaOperacion>
+                <MedallaOperacion v-show="props.operacionid" v-if="!editModeActive" :id="props.operacionid" :nombre="props.operacionid"></MedallaOperacion>
                 <SelectOperacion v-else v-model="nuevaOperacionid" class="select-secondary select-sm"></SelectOperacion>
 
                 <!-- Boton de guardar cambios-->
@@ -98,7 +98,7 @@ import { useEditMode } from '@/composables/editMode';
             </div>    
         </div>
         <!-- Información visible si clica botón de miembros -->
-        <div v-if="visibleMembers" class="w-full lg:w-50 bg-base-200 rounded-box shadow-sm relative join-item h-42">
+        <div v-if="visibleMembers" class="w-full lg:w-50 bg-base-200 rounded-box shadow-sm relative join-item sm">
             <!-- Lista scrolleable -->
             <ul class="list overflow-y-auto pr-1 max-h-full p-2">
                 <li v-for="ag in props.agentes" class="list-row h-10">{{ ag.nombre }}</li>
