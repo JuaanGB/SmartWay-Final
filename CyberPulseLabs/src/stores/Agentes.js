@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { API } from "./API";
 
 
@@ -7,6 +7,21 @@ export const useAgentes = defineStore('agentes', () => {
 
     const agentes = ref([])
     const api = new API('http://localhost:5152/api/Agentes')
+
+    const ordenInverso = ref(false)
+    const agentesOrdenados = computed( () => {
+        if (ordenInverso.value) {
+            console.log("orden inverso")
+            return [...agentes.value].reverse()
+        }
+        console.log("orden normal")
+        return agentes.value
+    })
+    function toggleOrden() {
+        ordenInverso.value = !ordenInverso.value
+    }
+
+    const countStatus = ref(false)
 
     // Operaciones con la API
     async function getAllAgentes() {
@@ -17,7 +32,11 @@ export const useAgentes = defineStore('agentes', () => {
     }
 
     async function getCount() {
-        return await api._getCount()
+        countStatus.value = true
+        let res = await api._getCount()
+        if (!res)
+            countStatus.value = false
+        return res
     }
 
     async function createAgente(nombre, estado, equipoId, rango) {
@@ -63,7 +82,7 @@ export const useAgentes = defineStore('agentes', () => {
         }
     }
 
-    return {agentes, getAllAgentes, getCount, createAgente,
+    return {agentes, agentesOrdenados, getAllAgentes, getCount, createAgente, countStatus, toggleOrden,
         deleteAgente, updateAgente
     }
 })

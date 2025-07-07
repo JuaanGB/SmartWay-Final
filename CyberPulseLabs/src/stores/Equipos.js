@@ -8,6 +8,8 @@ export const useEquipos = defineStore('equipos', () => {
     const api = new API('http://localhost:5152/api/Equipos')      
     const loadingAllEquipos = ref(false)  
 
+    const countStatus = ref(false)
+
     // Operaciones con la API
     async function getAllEquipos() {
         loadingAllEquipos.value = true
@@ -28,7 +30,11 @@ export const useEquipos = defineStore('equipos', () => {
         return eq
     }
     async function getCount() {
-        return await api._getCount()
+        countStatus.value = true
+        let res = await api._getCount()
+        if (!res)
+            countStatus.value = false
+        return res
     }
     async function createEquipo(nombre, especialidad, operacionID) {
         const res = await api._create(attributesToItem(undefined, nombre, especialidad, operacionID))
@@ -67,5 +73,6 @@ export const useEquipos = defineStore('equipos', () => {
         return equipo
     }
 
-    return {equipos, loadingAllEquipos, getAllEquipos, getEquipo, getCount, createEquipo, deleteEquipo, updateEquipo}
+    return {equipos, loadingAllEquipos, getAllEquipos, getEquipo, getCount, countStatus,
+        createEquipo, deleteEquipo, updateEquipo}
 })

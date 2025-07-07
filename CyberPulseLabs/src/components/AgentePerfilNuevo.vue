@@ -12,14 +12,14 @@ import SelectEquipo from './SelectEquipo.vue';
     const activo = ref(false)
     const equipoId = ref(0)
     const rango = ref('')
-    const inicial = computed(() => {
-        return nombre.value[0]
-    })
 
     async function addAgente() {
         const exito = await agStore.createAgente(nombre.value, activo.value, equipoId.value, rango.value)
-        if (exito)
+        if (exito) {
             notiStore.addNotificacion("success", 3000, "Agente añadido correctamente.")
+            flushInputs()
+        }
+            
         else if (!nombre.value || !activo.value || !rango.value)
             notiStore.addNotificacion("error", 3000, "Debes completar todos los campos.")
         else 
@@ -28,6 +28,13 @@ import SelectEquipo from './SelectEquipo.vue';
 
     function updateNuevoEquipo(id) {
         equipoId.value = id
+    }
+
+    function flushInputs() {
+        nombre.value = ''
+        activo.value = false
+        equipoId.value = 0
+        rango.value = ''
     }
 
 
@@ -40,7 +47,7 @@ import SelectEquipo from './SelectEquipo.vue';
             <!-- Avatar del nombre -->
             <div class="avatar avatar-placeholder">
                 <div class="bg-neutral text-neutral-content w-16 rounded-full">
-                    <span class="text-xl font-bold">{{ inicial }}</span>
+                    <span class="text-4xl">+</span>
                 </div>
             </div>
 

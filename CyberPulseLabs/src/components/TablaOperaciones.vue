@@ -27,7 +27,7 @@ function refreshOperaciones() {
 
     <div class="w-full m-1 overflow-x-auto">
       <table class="min-w-[600px] mx-auto table max-w-3/4 border rounded-box border-base-content/5">
-        <thead class="bg-base-300">
+        <thead class="bg-base-200">
           <tr>
             <th class="min-w-28">
               <!-- Recargar lista de operaciones -->

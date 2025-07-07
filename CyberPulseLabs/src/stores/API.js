@@ -27,6 +27,7 @@ export class API {
     }
 
     async _getCount() {
+        try {
         let res = await fetch(`${this.uri}/count`, {
             method: "GET",
             headers: {
@@ -35,6 +36,10 @@ export class API {
             },
         })
         return await res.json()
+        } catch (error) {
+            return false
+        }
+        
     }
 
     async _create(item) {   

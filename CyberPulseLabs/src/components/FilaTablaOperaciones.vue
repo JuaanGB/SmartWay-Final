@@ -46,7 +46,7 @@ import { useEditMode } from '@/composables/editMode';
 
 <template>
 
-    <tr :class="{'bg-success': editModeActive}">
+    <tr :class="{'bg-success': editModeActive}" class="bg-base-100">
         <th>
             <!-- Botones edición no activa -->
             <div v-if="!editModeActive">

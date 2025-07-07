@@ -18,19 +18,30 @@ onMounted( () => {
 
 <template>
 
-    <main class="flex flex-col items-center gap-4 m-4">
-      	<h2 class="text-3xl font-bold">Gestión de equipos</h2>
-		<p>Desde esta página puedes visualizar el listado de equipos de CyberPulseLabs, permitiendo su total gestión 
-		editándolos, eliminándolos o añadiendo nuevos agentes de forma sencilla.
-		</p>
-		<h2 class="text-3xl font-bold mt-8">Añadir un nuevo equipo</h2>
-		<div class="grid grid-cols-1 lg:grid-cols-2 w-full gap-4">
-			<TarjetaEquipoNuevo class="mx-auto col-span-full"></TarjetaEquipoNuevo>
-			<h2 class="text-3xl font-bold mt-8 col-span-full text-center">Listado de equipos</h2>
-			<TarjetaEquipo class="mx-auto" v-for="eq in equipoStore.equipos" :key="eq.id"
-				:id="eq.id" :nombre="eq.nombre" :especialidad="eq.especialidad" :operacionid="eq.operacionId">
-			</TarjetaEquipo>
+    <main class="grid grid-cols-1 md:grid-cols-2 items-center gap-4 m-4 w-7/8 mx-auto">
+		<div class="rounded-box p-4 w-auto p-4 bg-base-300 flex flex-col items-center gap-4 shadow-md shadow-primary">
+			<h2 class="text-3xl font-bold">Gestión de equipos</h2>
+			<p>Desde esta página puedes visualizar el listado de equipos de CyberPulseLabs, permitiendo su total gestión 
+			editándolos, eliminándolos o añadiendo nuevos agentes de forma sencilla.
+			</p>
 		</div>
+
+		<div class="rounded-box w-auto p-4 bg-base-300 flex flex-col items-center gap-4 shadow-md shadow-primary">
+			<h2 class="text-3xl font-bold">Añadir un nuevo equipo</h2>
+			<TarjetaEquipoNuevo></TarjetaEquipoNuevo>	
+		</div>
+
+		<div class="col-span-full w-full roundex-box bg-base-300 flex flex-col items-center gap-4 p-4 shadow-md shadow-primary">
+			<h2 class="text-3xl font-bold mt-8 col-span-full text-center">Listado de equipos</h2>
+			<div class="overflow-y-auto col-span-full w-full">
+				<div class="grid grid-cols-1 lg:grid-cols-2 rounded-box p-4 gap-6 w-full mx-auto p-4 h-50">
+					<TarjetaEquipo class="mx-auto" v-for="eq in equipoStore.equipos" :key="eq.id"
+						:id="eq.id" :nombre="eq.nombre" :especialidad="eq.especialidad" :operacionid="eq.operacionId">
+					</TarjetaEquipo>
+				</div>	
+			</div>
+		</div>
+		
   	</main>
 
 	<dialog id="modalOp" class="modal">

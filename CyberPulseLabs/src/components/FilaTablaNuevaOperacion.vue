@@ -37,7 +37,7 @@
 
 <template>
 
-    <tr>
+    <tr class="bg-base-100">
         <th>
             <!-- Botón de guardar -->
             <button class="btn btn-primary btn-outline rounded-md" @click="createOperacion">

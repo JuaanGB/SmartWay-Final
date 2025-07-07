@@ -8,6 +8,8 @@ export const useOperaciones = defineStore('operaciones', () => {
     const operacionAct = ref({})
     const api = new API('http://localhost:5152/api/Operaciones')
 
+    const countStatus = ref(false)
+
     // Filtros
     function filterOperaciones(nombre, estado, inicio, fin) {
         operaciones.value = operaciones.value.filter( op => {
@@ -35,7 +37,11 @@ export const useOperaciones = defineStore('operaciones', () => {
         return res
     }
     async function getCount() {
-        return await api._getCount()
+        countStatus.value = true
+        let res = await api._getCount()
+        if (!res)
+            countStatus.value = false
+        return res
     }
     async function getOperacion(id) {
         const op = operaciones.value.filter( o => o.id == id)[0]
@@ -84,6 +90,6 @@ export const useOperaciones = defineStore('operaciones', () => {
         }
     }
 
-    return {operaciones, operacionAct, filterOperaciones, getOperacion, getCount,
-        getAllOperaciones, createOperacion, deleteOperacion, updateOperaciones}
+    return {operaciones, operacionAct, filterOperaciones, getOperacion, getCount, countStatus,
+            getAllOperaciones, createOperacion, deleteOperacion, updateOperaciones}
 })

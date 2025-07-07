@@ -73,18 +73,21 @@ onMounted(async () => {
 
         <!-- Métricas del sistema -->
         <h2 class="text-3xl font-bold mt-8">Estado actual del sistema</h2>
-        <div class="stats max-sm:stats-vertical shadow-md bg-base-200 w-full max-w-4xl">
+        <div class="stats max-sm:stats-vertical shadow-md bg-base-200 w-full max-w-4xl text-primary">
             <div class="stat">
                 <div class="stat-title">Operaciones</div>
-                <div class="stat-value">{{ totalOp !== null ? totalOp : 'Cargando...' }}</div>
+                <div v-if="opStore.countStatus" class="stat-value">{{ totalOp }}</div>
+                <span v-else class="loading loading-spinner loading-xl"></span>
             </div>
             <div class="stat">
-                <div class="stat-title">Equipos desplegados</div>
-                <div class="stat-value">{{ totalEq !== null ? totalEq : 'Cargando...' }}</div>
+                <div class="stat-title">Equipos</div>
+                <div v-if="eqStore.countStatus" class="stat-value">{{ totalEq }}</div>
+                <span v-else class="loading loading-spinner loading-xl"></span>
             </div>
             <div class="stat">
                 <div class="stat-title">Agentes</div>
-                <div class="stat-value">{{ totalAg !== null ? totalAg : 'Cargando...' }}</div>
+                <div v-if="agStore.countStatus" class="stat-value">{{ totalAg }}</div>
+                <span v-else class="loading loading-spinner loading-xl"></span>
             </div>
         </div>
 
