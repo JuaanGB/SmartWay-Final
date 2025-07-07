@@ -38,6 +38,7 @@ import SelectEquipo from './SelectEquipo.vue';
     async function saveChanges() {
         let exito = await agStore.updateAgente(props.id, nuevoNombre.value, nuevoEstado.value,
             nuevoEquipoId.value, nuevoRango.value)
+        nuevoEquipoNombre.value = (await eqStore.getEquipo(nuevoEquipoId.value)).nombre
         if (exito)
             notiStore.addNotificacion("success", 3000, "Agente actualizado correctamente.")
         else 

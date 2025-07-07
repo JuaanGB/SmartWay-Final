@@ -90,7 +90,8 @@ namespace CPLAPI.Migrations
                 {
                     b.HasOne("CPLAPI.Models.Equipo", "Equipo")
                         .WithMany("Agentes")
-                        .HasForeignKey("EquipoId");
+                        .HasForeignKey("EquipoId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Equipo");
                 });
@@ -99,7 +100,8 @@ namespace CPLAPI.Migrations
                 {
                     b.HasOne("CPLAPI.Models.Operacion", "Operacion")
                         .WithMany("Equipos")
-                        .HasForeignKey("OperacionId");
+                        .HasForeignKey("OperacionId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Operacion");
                 });

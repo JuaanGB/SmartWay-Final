@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPLAPI.Migrations
 {
     [DbContext(typeof(CyberPulseContext))]
-    [Migration("20250707090742_ListaDeAgentes")]
-    partial class ListaDeAgentes
+    [Migration("20250707100125_OnDeletePrueba")]
+    partial class OnDeletePrueba
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,7 +103,8 @@ namespace CPLAPI.Migrations
                 {
                     b.HasOne("CPLAPI.Models.Operacion", "Operacion")
                         .WithMany("Equipos")
-                        .HasForeignKey("OperacionId");
+                        .HasForeignKey("OperacionId")
+                    .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Operacion");
                 });

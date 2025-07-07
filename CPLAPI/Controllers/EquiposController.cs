@@ -87,7 +87,6 @@ public class EquiposController : ControllerBase
         {
             return NotFound();
         }
-
         _context.Equipos.Remove(equipo);
         await _context.SaveChangesAsync();
 

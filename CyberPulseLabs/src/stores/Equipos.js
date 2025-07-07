@@ -18,6 +18,7 @@ export const useEquipos = defineStore('equipos', () => {
         loadingAllEquipos.value = false
     }
     async function getEquipo(id) {
+        if (id == null) return
         let eq = null
         if (loadingAllEquipos.value == false) {
             eq = equipos.value.find( e => e.id == id)

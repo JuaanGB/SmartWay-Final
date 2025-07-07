@@ -11,9 +11,9 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddDbContext<CyberPulseContext>(opt =>
 {
-opt.UseSqlite(
-    builder.Configuration.GetConnectionString("DefaultConnection")
-    );
+    opt.UseSqlite(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+        );
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

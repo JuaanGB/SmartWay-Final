@@ -15,8 +15,18 @@ public class CyberPulseContext : DbContext
             .HasMany(e => e.Equipos)
             .WithOne(e => e.Operacion)
             .HasForeignKey(e => e.OperacionId)
+            .OnDelete(DeleteBehavior.SetNull)
             .HasPrincipalKey(e => e.Id)
             ;
+
+        modelBuilder.Entity<Equipo>()
+            .HasMany(e => e.Agentes)
+            .WithOne(e => e.Equipo)
+            .HasForeignKey(e => e.EquipoId)
+            .OnDelete(DeleteBehavior.SetNull)
+            .HasPrincipalKey(e => e.Id)
+            ;
+
     }
 
     public DbSet<Agente> Agentes { get; set; } = null!;
