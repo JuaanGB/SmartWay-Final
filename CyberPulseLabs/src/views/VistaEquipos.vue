@@ -45,13 +45,16 @@ onMounted( () => {
   	</main>
 
 	<dialog id="modalOp" class="modal">
-        <div class="modal-box">
+        <div class="modal-box w-auto pt-10">
             <form method="dialog">
             	<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
-            <h3 class="text-lg font-bold">Operación: {{ opStore.operacionAct.nombre }}</h3>
-            <MedallaEstado :estado="opStore.operacionAct.estado"></MedallaEstado>
-            <p>{{ opStore.operacionAct.fechaInicio }} - {{ opStore.operacionAct.fechaFin }}</p>
+			<div class="flex gap-2 items-center">
+				<h3 class="text-lg font-bold">{{ opStore.operacionAct.nombre }}</h3>
+            	<MedallaEstado :estado="opStore.operacionAct.estado"></MedallaEstado>
+			</div>
+            
+            <p>{{ opStore.operacionAct.fechaInicio }} a {{ opStore.operacionAct.fechaFin }}</p>
         </div>
     </dialog>
 

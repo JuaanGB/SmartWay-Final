@@ -18,6 +18,11 @@ import SelectOperacion from './SelectOperacion.vue';
     })
 
     async function createEquipo() {
+        if (!nuevoNombre.value || !nuevaEspecialidad.value) {
+            notiStore.addNotificacion("error", 3000, "Debes rellenar el nombre y la especialidad.")
+            return
+        }
+
         let exito = await equipoStore.createEquipo(nuevoNombre.value, nuevaEspecialidad.value, nuevaOperacionID.value)
         if (exito)
             notiStore.addNotificacion("success", 3000, "Nuevo equipo añadido correctamente.")

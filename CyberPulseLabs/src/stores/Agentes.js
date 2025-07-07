@@ -34,12 +34,13 @@ export const useAgentes = defineStore('agentes', () => {
     async function getCount() {
         countStatus.value = true
         let res = await api._getCount()
-        if (!res)
+        if (res === false)
             countStatus.value = false
         return res
     }
 
     async function createAgente(nombre, estado, equipoId, rango) {
+        equipoId = !equipoId ? null : equipoId
         const res = await api._create(
             attributesToItem(undefined,nombre, estado, equipoId, rango))
         if (res.ok) {

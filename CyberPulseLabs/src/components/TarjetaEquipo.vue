@@ -33,6 +33,11 @@ import { useEditMode } from '@/composables/editMode';
     }
 
     async function updateEquipo() {
+        if (!nuevoNombre.value || !nuevaEspecialidad.value) {
+            notiStore.addNotificacion("error", 3000, "Debes rellenar el nombre y la especialidad.")
+            return
+        }
+
         const exito = await equipoStore.updateEquipo(props.id, nuevoNombre.value, nuevaEspecialidad.value, nuevaOperacionid.value)
         if (exito)
             notiStore.addNotificacion("success", 3000, "Nueva operación añadida correctamente.")

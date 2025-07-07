@@ -36,6 +36,11 @@ import SelectEquipo from './SelectEquipo.vue';
     }
 
     async function saveChanges() {
+        if (!nuevoNombre.value || !nuevoRango.value) {
+            notiStore.addNotificacion("error", 3000, "Debes rellenar el nombre y el rango.")
+            return
+        }
+
         let exito = await agStore.updateAgente(props.id, nuevoNombre.value, nuevoEstado.value,
             nuevoEquipoId.value, nuevoRango.value)
         nuevoEquipoNombre.value = (await eqStore.getEquipo(nuevoEquipoId.value)).nombre

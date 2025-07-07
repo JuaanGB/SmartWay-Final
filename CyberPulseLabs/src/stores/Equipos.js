@@ -32,11 +32,12 @@ export const useEquipos = defineStore('equipos', () => {
     async function getCount() {
         countStatus.value = true
         let res = await api._getCount()
-        if (!res)
+        if (res === false) // Igualdad estricta por si devuelve que hay 0 equipos
             countStatus.value = false
         return res
     }
     async function createEquipo(nombre, especialidad, operacionID) {
+        operacionID = !operacionID ? null : operacionID
         const res = await api._create(attributesToItem(undefined, nombre, especialidad, operacionID))
         if (res.ok) {
             setEquipos(await res.json())

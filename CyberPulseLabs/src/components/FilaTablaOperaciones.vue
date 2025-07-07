@@ -22,13 +22,18 @@ import { useEditMode } from '@/composables/editMode';
     })
 
     async function saveChanges() {
+        if (!nuevoNombre || !nuevoEstado || !nuevoInicio || !nuevoFin) {
+            notiStore.addNotificacion("error", 3000, "Todos los campos deben estar completos.")
+            return
+        } else if (nuevoFin <= nuevoInicio) {
+            notiStore.addNotificacion("error", 3000, "La fecha de fin debe ser posterior a la de inicio.")
+            return
+        }
+        
         let exito = await opStore.updateOperaciones(props.id, nuevoNombre, nuevoEstado, nuevoInicio, nuevoFin)
         if (exito) {
             notiStore.addNotificacion("success", 3000, "Operación actualizada correctamente.")
-        } else if (nuevoFin <= nuevoInicio)
-            notiStore.addNotificacion("error", 3000, "La fecha de fin debe ser posterior a la de inicio.")
-        else if (!nuevoNombre || !nuevoEstado || !nuevoInicio || !nuevoFin)
-            notiStore.addNotificacion("error", 3000, "Todos los campos deben estar completos.")
+        }
         else 
             notiStore.addNotificacion("error", 3000, "Error al actualizar la operación.")
         toggleEditMode()

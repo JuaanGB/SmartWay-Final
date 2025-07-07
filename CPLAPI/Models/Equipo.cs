@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace CPLAPI.Models;
 
 public class Equipo

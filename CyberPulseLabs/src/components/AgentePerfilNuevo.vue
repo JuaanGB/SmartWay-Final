@@ -14,14 +14,16 @@ import SelectEquipo from './SelectEquipo.vue';
     const rango = ref('')
 
     async function addAgente() {
+        if (!nombre.value || !rango.value) {
+            notiStore.addNotificacion("error", 3000, "Debes completar todos los campos.")
+            return
+        }
+
         const exito = await agStore.createAgente(nombre.value, activo.value, equipoId.value, rango.value)
         if (exito) {
             notiStore.addNotificacion("success", 3000, "Agente añadido correctamente.")
             flushInputs()
         }
-            
-        else if (!nombre.value || !activo.value || !rango.value)
-            notiStore.addNotificacion("error", 3000, "Debes completar todos los campos.")
         else 
             notiStore.addNotificacion("error", 3000, "Error al añadir un agente.")
     }

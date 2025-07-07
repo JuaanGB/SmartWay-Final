@@ -39,7 +39,7 @@ export const useOperaciones = defineStore('operaciones', () => {
     async function getCount() {
         countStatus.value = true
         let res = await api._getCount()
-        if (!res)
+        if (res === false)
             countStatus.value = false
         return res
     }
