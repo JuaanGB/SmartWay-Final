@@ -7,7 +7,6 @@ public class Equipo
     public string? Especialidad { get; set; }
     public string? OperacionId { get; set; }
     public virtual Operacion? Operacion { get; set; }
-
-    public IList<AgenteEnEquipo>? Agentes { get; }
+    public ICollection<Agente> Agentes { get; } = new List<Agente>();
 
 }

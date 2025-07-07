@@ -15,12 +15,12 @@ import TablaOperaciones from '@/components/TablaOperaciones.vue'
     </div>
 
     <div class="rounded-box w-auto p-4 bg-base-300 flex flex-col items-center gap-4 shadow-md shadow-primary">
-      <h2 class="text-3xl font-bold">Búsqueda de operaciones</h2>
+      <h2 class="text-3xl font-bold text-center">Búsqueda de operaciones</h2>
       <FiltrarOperaciones></FiltrarOperaciones>
     </div>
 
     <div class="col-span-full rounded-box w-auto p-4 gap-4 bg-base-300 flex flex-col items-center shadow-md shadow-primary">
-      <h2 class="text-3xl font-bold">Listado de operaciones</h2>
+      <h2 class="text-3xl font-bold text-center">Listado de operaciones</h2>
       <TablaOperaciones></TablaOperaciones>
     </div>
   </main>

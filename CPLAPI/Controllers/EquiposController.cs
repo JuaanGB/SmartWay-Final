@@ -18,6 +18,7 @@ public class EquiposController : ControllerBase
     public async Task<ActionResult<IEnumerable<Equipo>>> GetEquipos()
     {
         return await _context.Equipos
+            .Include(x => x.Agentes)
             .OrderBy(x => x.Id)
             .Select(x => x)
             .ToListAsync();

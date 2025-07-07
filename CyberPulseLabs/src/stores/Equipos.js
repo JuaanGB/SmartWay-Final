@@ -26,7 +26,6 @@ export const useEquipos = defineStore('equipos', () => {
                 equipos.value.push(eq)
             }
         }
-        
         return eq
     }
     async function getCount() {

@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import SelectOperacion from './SelectOperacion.vue';
 import { useEquipos } from '@/stores/Equipos';
 import { useNotificaciones } from '@/stores/Notificaciones';
 import MedallaOperacion from './MedallaOperacion.vue';
 import { useEditMode } from '@/composables/editMode';
 
-    const props = defineProps(['id', 'nombre', 'especialidad', 'operacionid'])
+    const props = defineProps(['id', 'nombre', 'especialidad', 'operacionid', 'agentes'])
 
     const visibleMembers = ref(false)
 
@@ -56,13 +56,13 @@ import { useEditMode } from '@/composables/editMode';
 <template>
 
     <div class="join max-lg:join-vertical">
-        <div class="card card-secondary shadow-md bg-base-200 flex-row join-item w-90 h-40">
+        <div class="card card-secondary shadow-md bg-base-200 flex-row join-item w-full md:w-90 h-42">
             <div class="card-body w-full">
                 <!-- Información siempre visible -->
                 <div class="flex flex-col relative">
 
                     <!-- Botones de edición y miembros -->
-                    <div class="flex flex-row gap-1 max-md:absolute top-0 right-0">
+                    <div class="flex flex-row gap-1 ml-auto mb-2">
                         <button class="btn btn-circle btn-secondary btn-sm" @click="toggleEditMode">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><!-- Icon from HeroIcons by Refactoring UI Inc - https://github.com/tailwindlabs/heroicons/blob/master/LICENSE --><path fill="currentColor" fill-rule="evenodd" d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.8 2.8 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.8 2.8 0 0 1 .596-.892z" clip-rule="evenodd"/></svg>
                         </button>
@@ -93,19 +93,19 @@ import { useEditMode } from '@/composables/editMode';
             </div>    
         </div>
         <!-- Información visible si clica botón de miembros -->
-        <div v-if="visibleMembers" class="w-full lg:w-50 bg-base-200 rounded-box shadow-sm relative join-item h-40">
+        <div v-if="visibleMembers" class="w-full lg:w-50 bg-base-200 rounded-box shadow-sm relative join-item h-42">
             <!-- Lista scrolleable -->
-            <ul class="list overflow-y-auto pr-1 max-h-full pb-16">
-                <li v-for="i in 10" class="list-row h-10">Miembro {{ i }}</li>
+            <ul class="list overflow-y-auto pr-1 max-h-full p-2">
+                <li v-for="ag in props.agentes" class="list-row h-10">{{ ag.nombre }}</li>
             </ul>
 
             <!-- Input fijo abajo -->
-            <div class="absolute bottom-0 left-0 w-full bg-base-200 p-2">
+            <!--<div class="absolute bottom-0 left-0 w-full bg-base-200 p-2">
                 <div class="join w-full">
                 <input class="input join-item w-full" type="text" placeholder="nuevo miembro">
                 <button class="btn btn-primary join-item" @click="addMember">Ok</button>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 
