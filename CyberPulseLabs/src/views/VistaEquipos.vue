@@ -21,7 +21,7 @@ onMounted( () => {
     <main class="grid grid-cols-1 md:grid-cols-2 items-center gap-4 m-4 w-7/8 mx-auto">
 		<div class="rounded-box p-4 w-auto p-4 bg-base-300 flex flex-col items-center gap-4 shadow-md shadow-primary">
 			<h2 class="text-3xl font-bold">Gestión de equipos</h2>
-			<p>Desde esta página puedes visualizar el listado de equipos de CyberPulseLabs, permitiendo su total gestión 
+			<p class="text-center">Desde esta página puedes visualizar el listado de equipos de CyberPulseLabs, permitiendo su total gestión 
 			editándolos, eliminándolos o añadiendo nuevos agentes de forma sencilla.
 			</p>
 		</div>

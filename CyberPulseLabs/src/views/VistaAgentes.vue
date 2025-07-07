@@ -20,7 +20,7 @@ onMounted(async () => {
 
     <div class="rounded-box p-4 lg:w-3/4 w-full bg-base-300 flex flex-col items-center gap-2 shadow-md shadow-primary">
       <h2 class="text-3xl font-bold">Gestión de agentes</h2>
-      <p>Desde esta página puedes visualizar el listado de agentes de CyberPulseLabs, permitiendo su total gestión 
+      <p class="text-center">Desde esta página puedes visualizar el listado de agentes de CyberPulseLabs, permitiendo su total gestión 
         editándolos, eliminándolos o añadiendo nuevos agentes de forma sencilla.
       </p>
     </div>
