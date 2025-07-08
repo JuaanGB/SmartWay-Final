@@ -60,7 +60,7 @@ import { useEditMode } from '@/composables/editMode';
 
 <template>
 
-    <div class="join max-lg:join-vertical max-sm:w-full h-auto">
+    <div class="join max-xl:join-vertical max-sm:w-full h-auto">
         <div class="card card-secondary shadow-md bg-base-200 flex-row join-item w-full md:w-90">
             <div class="card-body w-full">
                 <!-- Información siempre visible -->
@@ -98,7 +98,7 @@ import { useEditMode } from '@/composables/editMode';
             </div>    
         </div>
         <!-- Información visible si clica botón de miembros -->
-        <div v-if="visibleMembers" class="w-full lg:w-50 bg-base-200 rounded-box shadow-sm relative join-item sm">
+        <div v-if="visibleMembers" class="w-full xl:w-50 bg-base-200 rounded-box shadow-sm relative join-item sm">
             <!-- Lista scrolleable -->
             <ul class="list overflow-y-auto pr-1 max-h-full p-2">
                 <li v-for="ag in props.agentes" class="list-row h-10">{{ ag.nombre }}</li>

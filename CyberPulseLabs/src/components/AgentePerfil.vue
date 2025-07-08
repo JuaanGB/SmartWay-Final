@@ -86,7 +86,7 @@ import SelectEquipo from './SelectEquipo.vue';
             <!-- Vista normal (no edición) -->
             <div v-if="!editModeActive" class="flex flex-col items-center gap-2">
                 <!-- Nombre -->
-                <p class="card-title">{{ props.nombre }}</p>
+                <p class="card-title text-center">{{ props.nombre }}</p>
 
                 <!-- Activo / inactivo -->
                 <ActividadAgente :estado="props.activo"></ActividadAgente>
