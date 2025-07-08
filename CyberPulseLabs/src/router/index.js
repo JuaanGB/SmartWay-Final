@@ -3,7 +3,8 @@ import VistaPrincipal from '../views/VistaPrincipal.vue'
 import VistaAgentes from '@/views/VistaAgentes.vue'
 import VistaEquipos from '@/views/VistaEquipos.vue'
 import VistaOperaciones from '@/views/VistaOperaciones.vue'
-import VistaAutenticacion from '@/views/VistaAutenticacion.vue'
+import VistaLogin from '@/views/VistaLogin.vue'
+import VistaRegistro from '@/views/VistaRegistro.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,9 +30,14 @@ const router = createRouter({
      component: VistaOperaciones,
     },
     {
-      path: '/auth',
-      name: 'auth',
-      component: VistaAutenticacion,
+      path: '/login',
+      name: 'login',
+      component: VistaLogin,
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: VistaRegistro,
     }
   ],
 })

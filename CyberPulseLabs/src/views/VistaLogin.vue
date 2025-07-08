@@ -10,7 +10,7 @@ function toggleContraseña() {
 
 <template>
     <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-secondary">
-        <main class="w-full max-w-md rounded-box bg-base-200 p-8 shadow-xl flex flex-col gap-4">
+        <main class="w-7/8 max-w-md rounded-box bg-base-200 p-8 shadow-xl flex flex-col gap-4">
         
         <h2 class="font-bold text-center text-2xl text-primary">¡Bienvenido!</h2>
 
@@ -35,7 +35,7 @@ function toggleContraseña() {
 
         <div class="text-gray-500 flex flex-col items-center text-sm mt-2">
             <span>¿No tienes una cuenta?</span>
-            <span>Crea una <a class="hover:underline cursor-pointer">aquí</a></span>
+            <span>Crea una <RouterLink class="hover:underline cursor-pointer" to="/register">aquí</RouterLink></span>
         </div>
 
         </main>
