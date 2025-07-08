@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import * as api from '@/stores/Auth'
 import { useNotificaciones } from '@/stores/Notificaciones'
+import router from '@/router'
 
 const notiStore = useNotificaciones()
 
@@ -20,9 +21,10 @@ async function iniciarSesion() {
     }
 
     const exito = await api.login(email.value, contraseña.value)
-    if (exito) 
+    if (exito) {
         notiStore.addNotificacion("success", 3000, "Bienvenido.")
-    else
+        router.push('/perfil')
+    } else
         notiStore.addNotificacion("error", 3000, "Credenciales incorrectas.")
 }
 </script>

@@ -5,6 +5,7 @@ import VistaEquipos from '@/views/VistaEquipos.vue'
 import VistaOperaciones from '@/views/VistaOperaciones.vue'
 import VistaLogin from '@/views/VistaLogin.vue'
 import VistaRegistro from '@/views/VistaRegistro.vue'
+import VistaPerfil from '@/views/VistaPerfil.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,7 +39,12 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: VistaRegistro,
-    }
+    },
+    {
+      path: '/perfil',
+      name: 'perfil',
+      component: VistaPerfil,
+    },
   ],
 })
 
