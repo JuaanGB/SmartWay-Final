@@ -56,7 +56,7 @@ export class API {
 
     async _update(item) {    
         let res = await fetch(`${this.uri}/${item.id}`, {
-            method: "PUT",
+            method: "PATCH",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

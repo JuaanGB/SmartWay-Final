@@ -76,7 +76,6 @@ export const useAgentes = defineStore('agentes', () => {
     function attributesToItem(id, nombre, estado, equipoId, rango) {
         return {
             id: id,
-            email: nombre.toLowerCase() + "@cyberpulselabs.com",
             nombre: nombre,
             activo: estado,
             equipoId: equipoId,

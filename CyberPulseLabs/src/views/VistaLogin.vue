@@ -1,10 +1,29 @@
 <script setup>
 import { ref } from 'vue'
+import * as api from '@/stores/Auth'
+import { useNotificaciones } from '@/stores/Notificaciones'
+
+const notiStore = useNotificaciones()
 
 const mostrar = ref(false)
+const email = ref('')
+const contraseña = ref('')
 
 function toggleContraseña() {
     mostrar.value = !mostrar.value
+}
+
+async function iniciarSesion() {
+    if (!email.value || !contraseña.value) {
+        notiStore.addNotificacion("error", 3000, "Debes rellenar ambos campos.")
+        return
+    }
+
+    const exito = await api.login(email.value, contraseña.value)
+    if (exito) 
+        notiStore.addNotificacion("success", 3000, "Bienvenido.")
+    else
+        notiStore.addNotificacion("error", 3000, "Credenciales incorrectas.")
 }
 </script>
 
@@ -15,14 +34,14 @@ function toggleContraseña() {
         <h2 class="font-bold text-center text-2xl text-primary">¡Bienvenido!</h2>
 
         <fieldset class="fieldset">
-            <legend class="fieldset-legend">Nombre de usuario</legend>
-            <input type="text" class="input w-full" placeholder="Nombre" />
+            <legend class="fieldset-legend">Correo electrónico</legend>
+            <input v-model="email" type="email" class="input w-full" placeholder="agente@cybperpulselabs.com" />
         </fieldset>
 
         <fieldset class="fieldset">
             <legend class="fieldset-legend">Contraseña</legend>
             <div class="relative">
-                <input id="contraseña" :type="mostrar ? 'text' : 'password'" class="input w-full" placeholder="Contraseña" />
+                <input v-model="contraseña" id="contraseña" :type="mostrar ? 'text' : 'password'" class="input w-full" placeholder="Contraseña" />
                 <label class="swap swap-flip text-primary absolute right-3 top-2">
                 <input type="checkbox" @click="toggleContraseña">
                     <svg class="swap-off" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M12 9a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m0-4.5c5 0 9.27 3.11 11 7.5c-1.73 4.39-6 7.5-11 7.5S2.73 16.39 1 12c1.73-4.39 6-7.5 11-7.5M3.18 12a9.821 9.821 0 0 0 17.64 0a9.821 9.821 0 0 0-17.64 0"/></svg>
@@ -31,7 +50,7 @@ function toggleContraseña() {
             </div>
         </fieldset>
 
-        <button class="btn btn-primary w-full">Iniciar sesión</button>
+        <button @click="iniciarSesion" class="btn btn-primary w-full">Iniciar sesión</button>
 
         <div class="text-gray-500 flex flex-col items-center text-sm mt-2">
             <span>¿No tienes una cuenta?</span>

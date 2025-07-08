@@ -1,12 +1,46 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router';
+import * as api from '@/stores/Auth'
+import { useNotificaciones } from '@/stores/Notificaciones'
+
+const notiStore = useNotificaciones()
 
 const mostrar = ref(false)
+const nombre = ref('')
+const email = ref('')
+const contraseña = ref('')
+const contraseña2 = ref('')
+
+const terminos = ref(false)
 
 function toggleContraseña() {
   mostrar.value = !mostrar.value
 }
+
+async function registrar() {
+	if (!nombre.value || !email.value || !contraseña.value || !contraseña2.value) {
+		notiStore.addNotificacion("error", 3000, "Debes rellenar todos los campos.")
+		return
+	}
+
+	if (contraseña.value != contraseña2.value) {
+		notiStore.addNotificacion("error", 3000, "Los dos campos de contraseñas no coinciden.")
+		return
+	}
+
+	if (!terminos.value) {
+		notiStore.addNotificacion("error", 3000, "Debes aceptar los términos y condiciones.")
+		return
+	}
+
+	const exito = await api.register(nombre.value, email.value, contraseña.value)
+    if (exito) 
+        notiStore.addNotificacion("success", 3000, "Bienvenido.")
+    else
+        notiStore.addNotificacion("error", 3000, "Error al hacer el registro.")
+}
+
 </script>
 
 <template>
@@ -18,20 +52,20 @@ function toggleContraseña() {
 			<!-- Nombre del agente -->
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">Nombre completo</legend>
-				<input type="text" class="input w-full" placeholder="Tu nombre completo" />
+				<input v-model="nombre" type="text" class="input w-full" placeholder="Tu nombre completo" />
 			</fieldset>
 
 			<!-- Email -->
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">Correo electrónico</legend>
-				<input type="email" class="input w-full" placeholder="ejemplo@cyberpulselabs.com" />
+				<input v-model="email" type="email" class="input w-full" placeholder="ejemplo@cyberpulselabs.com" />
 			</fieldset>
 
 			<!-- Contraseña -->
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">Contraseña</legend>
 				<div class="relative">
-					<input :type="mostrar ? 'text' : 'password'" class="input w-full pr-12" placeholder="Contraseña">
+					<input v-model="contraseña" :type="mostrar ? 'text' : 'password'" class="input w-full pr-12" placeholder="Contraseña">
 					<label class="swap swap-flip text-primary absolute right-3 top-2">
 						<input type="checkbox" @click="toggleContraseña" />
 						<svg class="swap-off" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M12 9a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m0-4.5c5 0 9.27 3.11 11 7.5c-1.73 4.39-6 7.5-11 7.5S2.73 16.39 1 12c1.73-4.39 6-7.5 11-7.5M3.18 12a9.821 9.821 0 0 0 17.64 0a9.821 9.821 0 0 0-17.64 0"/></svg>
@@ -43,17 +77,17 @@ function toggleContraseña() {
 			<!-- Confirmar contraseña -->
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">Confirmar contraseña</legend>
-				<input type="password" class="input w-full" placeholder="Repite la contraseña" />
+				<input v-model="contraseña2" type="password" class="input w-full" placeholder="Repite la contraseña" />
 			</fieldset>
 
 			<!-- Términos y condiciiones -->
 			<label class="flex items-center gap-2 col-span-full">
-				<input type="checkbox" class="checkbox checkbox-primary" />
+				<input v-model="terminos" type="checkbox" class="checkbox checkbox-primary" />
 				<span class="text-sm">Acepto los términos y condiciones</span>
 			</label>
 
 
-			<button class="btn btn-primary w-full col-span-full">Crear una cuenta</button>
+			<button @click="registrar" class="btn btn-primary w-full col-span-full">Crear una cuenta</button>
 
 			<div class="col-span-full text-gray-500 flex flex-col items-center text-sm mt-2">
 				<span>¿Ya tienes una cuenta?</span>

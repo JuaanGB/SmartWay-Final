@@ -44,7 +44,7 @@ export const useOperaciones = defineStore('operaciones', () => {
         return res
     }
     async function getOperacion(id) {
-        const op = operaciones.value.filter( o => o.id == id)[0]
+        let op = operaciones.value.filter( o => o.id == id)[0]
         if (!op) {
             op = await api._get(id)
             operaciones.value.push(op)
