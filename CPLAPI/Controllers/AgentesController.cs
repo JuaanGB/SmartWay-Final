@@ -1,4 +1,5 @@
 using CPLAPI.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,11 +17,11 @@ public class AgentesController : ControllerBase
 
     // GET: api/Agentes
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Agente>>> GetAgentes()
+    public async Task<ActionResult<IEnumerable<AgenteDTO>>> GetAgentes()
     {
         return await _context.Agentes
             .OrderBy(x => x.Nombre)
-            .Select(x => x)
+            .Select(x => AgenteToDTO(x))
             .ToListAsync();
     }
 
@@ -42,10 +43,14 @@ public class AgentesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<IEnumerable<Agente>>> PostAgente(AgenteDTO ag)
+    public async Task<ActionResult<IEnumerable<AgenteDTO>>> PostAgente(AgenteDTO ag)
     {
-
         var newAg = AgenteDTOToAgente(ag);
+
+        var hasher = new PasswordHasher<Agente>();
+        newAg.Contraseña = hasher.HashPassword(newAg, "contraseña");
+
+        newAg.Email = newAg.Nombre.ToLower() + "@cyberpulselabs.com";
 
         _context.Agentes.Add(newAg);
         await _context.SaveChangesAsync();
@@ -53,17 +58,18 @@ public class AgentesController : ControllerBase
         return await GetAgentes();
     }
 
+
     [HttpPut("{id}")]
-    public async Task<ActionResult<IEnumerable<Agente>>> PutAgente(int id, Agente newAg)
+    public async Task<ActionResult<IEnumerable<AgenteDTO>>> PutAgente(string email, Agente newAg)
     {
-        if (id != newAg.Id)
+        if (email != newAg.Email)
             return BadRequest();
 
-        var ag = await _context.Agentes.FindAsync(id);
+        var ag = await _context.Agentes.FindAsync(email);
         if (ag == null)
             return NotFound();
 
-        ag.Id = newAg.Id;
+        ag.Email = newAg.Email;
         ag.Nombre = newAg.Nombre;
         ag.Activo = newAg.Activo;
         ag.Rango = newAg.Rango;
@@ -73,7 +79,7 @@ public class AgentesController : ControllerBase
         {
             await _context.SaveChangesAsync();
         }
-        catch (DbUpdateConcurrencyException) when (!AgenteExists(id))
+        catch (DbUpdateConcurrencyException) when (!AgenteExists(email))
         {
             return NotFound();
         }
@@ -82,7 +88,7 @@ public class AgentesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<IEnumerable<Agente>>> DeleteAgente(int id)
+    public async Task<ActionResult<IEnumerable<AgenteDTO>>> DeleteAgente(int id)
     {
         var ag = await _context.Agentes.FindAsync(id);
         if (ag == null)
@@ -95,11 +101,11 @@ public class AgentesController : ControllerBase
     }
 
 
-    private bool AgenteExists(int id)
+    private bool AgenteExists(string email)
     {
-        return _context.Agentes.Any(e => e.Id == id);
+        return _context.Agentes.Any(e => e.Email == email);
     }
-    
+
     public static Agente AgenteDTOToAgente(AgenteDTO dto)
     {
         return new Agente
@@ -108,6 +114,18 @@ public class AgentesController : ControllerBase
             Activo = dto.Activo,
             Rango = dto.Rango,
             EquipoId = dto.EquipoId
+        };
+    }
+
+    public static AgenteDTO AgenteToDTO(Agente ag)
+    {
+        return new AgenteDTO
+        {
+            Id = ag.Id,
+            Nombre = ag.Nombre,
+            Activo = ag.Activo,
+            EquipoId = ag.EquipoId,
+            Rango = ag.Rango
         };
     }
 }

@@ -27,6 +27,13 @@ public class CyberPulseContext : DbContext
             .HasPrincipalKey(e => e.Id)
             ;
 
+        modelBuilder.Entity<Agente>()
+            .HasIndex(a => a.Email)
+            .IsUnique()
+        ;
+
+        base.OnModelCreating(modelBuilder);
+
     }
 
     public DbSet<Agente> Agentes { get; set; } = null!;

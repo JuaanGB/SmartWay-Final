@@ -9,7 +9,7 @@ function toggleContraseña() {
 </script>
 
 <template>
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-secondary">
+    <div class="min-h-screen flex items-center justify-center">
         <main class="w-7/8 max-w-md rounded-box bg-base-200 p-8 shadow-xl flex flex-col gap-4">
         
         <h2 class="font-bold text-center text-2xl text-primary">¡Bienvenido!</h2>

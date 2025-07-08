@@ -11,15 +11,9 @@ function toggleContraseña() {
 
 <template>
 
-	<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-secondary">
+	<div class="min-h-screen flex items-center justify-center">
 		<main class="m-4 w-7/8 md:w-2xl rounded-box bg-base-200 p-8 shadow-xl flex flex-col gap-4 grid grid-cols-1 lg:grid-cols-2">
 			<h2 class="font-bold col-span-full text-center text-2xl text-primary">Crear cuenta</h2>
-
-			<!-- Nombre de usuario (no sé si lo quitaré )-->
-			<fieldset class="fieldset">
-				<legend class="fieldset-legend">Nombre de usuario</legend>
-				<input type="text" class="input w-full" placeholder="usuario123" />
-			</fieldset>
 
 			<!-- Nombre del agente -->
 			<fieldset class="fieldset">
@@ -32,9 +26,6 @@ function toggleContraseña() {
 				<legend class="fieldset-legend">Correo electrónico</legend>
 				<input type="email" class="input w-full" placeholder="ejemplo@cyberpulselabs.com" />
 			</fieldset>
-
-			<!-- Div vacío para alinear elementos -->
-			<div></div>
 
 			<!-- Contraseña -->
 			<fieldset class="fieldset">

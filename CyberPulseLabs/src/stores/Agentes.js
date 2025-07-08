@@ -42,7 +42,7 @@ export const useAgentes = defineStore('agentes', () => {
     async function createAgente(nombre, estado, equipoId, rango) {
         equipoId = !equipoId ? null : equipoId // Necesario porque si no la API busca un id con clave ""
         const res = await api._create(
-            attributesToItem(undefined,nombre, estado, equipoId, rango))
+            attributesToItem(undefined, nombre, estado, equipoId, rango))
         if (res.ok) {
             setAgentes(await res.json())
             return true
@@ -76,6 +76,7 @@ export const useAgentes = defineStore('agentes', () => {
     function attributesToItem(id, nombre, estado, equipoId, rango) {
         return {
             id: id,
+            email: nombre.toLowerCase() + "@cyberpulselabs.com",
             nombre: nombre,
             activo: estado,
             equipoId: equipoId,
