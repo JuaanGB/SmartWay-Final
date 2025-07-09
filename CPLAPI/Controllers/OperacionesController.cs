@@ -58,7 +58,7 @@ public class OperacionesController : ControllerBase
     }
 
     // También devolvemos todas las operaciones actualizadas por si añadiesen nuevas
-    [HttpPut("{id}")]
+    [HttpPatch("{id}")]
     public async Task<ActionResult<IEnumerable<Operacion>>> PutOperacion(string id, Operacion newOp)
     {
         if ((id != newOp.Id) || newOp.FechaFin <= newOp.FechaInicio)

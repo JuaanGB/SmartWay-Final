@@ -17,7 +17,6 @@
         nuevoRango.value = props.rango
         nuevoEstado.value = props.activo
         nuevoEquipoId.value = props.equipoId
-        console.log("Fin del modo edición:" + nuevoEquipoId.value)
     })
 
     const nuevoNombre = ref(props.nombre)

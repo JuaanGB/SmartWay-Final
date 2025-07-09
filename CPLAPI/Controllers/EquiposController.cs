@@ -54,7 +54,7 @@ public class EquiposController : ControllerBase
     }
 
     // PUT: api/equipos/{id}
-    [HttpPut("{id}")]
+    [HttpPatch("{id}")]
     public async Task<ActionResult<IEnumerable<Equipo>>> UpdateEquipo(int id, Equipo updatedEquipo)
     {
         if (id != updatedEquipo.Id)

@@ -24,13 +24,13 @@ function refreshOperaciones() {
 
 <template>
 
-    <div class="w-full m-1 overflow-x-auto overflow-y-auto">
-      <table class="min-w-[600px] mx-auto table max-w-3/4 border rounded-box border-base-content/5">
+    <div class="w-full m-1 overflow-x-auto overflow-y-auto h-80">
+      <table class="min-w-[600px] mx-auto table table-pin-rows max-w-3/4 border rounded-box border-base-content/5">
         <thead class="bg-base-200">
           <tr>
             <th class="min-w-28">
               <!-- Recargar lista de operaciones -->
-              <button class="btn btn-circle btn-sm btn-outline btn-neutral" @click="refreshOperaciones">
+              <button class="btn btn-circle btn-sm btn-outline" @click="refreshOperaciones">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M2 12a9 9 0 0 0 9 9c2.39 0 4.68-.94 6.4-2.6l-1.5-1.5A6.7 6.7 0 0 1 11 19c-6.24 0-9.36-7.54-4.95-11.95S18 5.77 18 12h-3l4 4h.1l3.9-4h-3a9 9 0 0 0-18 0"/></svg>
               </button>
             </th> <!-- Vacío para botones -->

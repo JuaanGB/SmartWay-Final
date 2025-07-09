@@ -34,7 +34,7 @@ onMounted( () => {
 		<div class="col-span-full w-full roundex-box bg-base-300 flex flex-col items-center gap-4 p-4 shadow-md shadow-primary">
 			<h2 class="text-3xl font-bold mt-8 col-span-full text-center">Listado de equipos</h2>
 			<div class="overflow-y-auto col-span-full w-full">
-				<div class="grid grid-cols-1 xl:grid-cols-2 rounded-box p-4 gap-6 w-full mx-auto p-4 h-70 xl:h-50">
+				<div class="grid grid-cols-1 xl:grid-cols-2 rounded-box p-4 gap-6 w-full mx-auto p-4 h-70 xl:h-100">
 					<TarjetaEquipo class="mx-auto" v-for="eq in equipoStore.equipos" :key="eq.id"
 						:id="eq.id" :nombre="eq.nombre" :especialidad="eq.especialidad" :operacionid="eq.operacionId" :agentes="eq.agentes">
 					</TarjetaEquipo>

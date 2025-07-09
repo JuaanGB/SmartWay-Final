@@ -15,7 +15,7 @@
     const notiStore = useNotificaciones()
 
     async function createOperacion() {
-        if (!nuevoNombre.value || !nuevoEstado.value || !nuevoInicio.value || !nuevoFin.value) {
+        if (!nuevoNombre.value || nuevoEstado.value === false || !nuevoInicio.value || !nuevoFin.value) {
             notiStore.addNotificacion("error", 3000, "Debes rellenar todos los campos.")
             return
         }
