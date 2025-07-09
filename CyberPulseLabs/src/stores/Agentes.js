@@ -11,10 +11,8 @@ export const useAgentes = defineStore('agentes', () => {
     const ordenInverso = ref(false)
     const agentesOrdenados = computed( () => {
         if (ordenInverso.value) {
-            console.log("orden inverso")
             return [...agentes.value].reverse()
         }
-        console.log("orden normal")
         return agentes.value
     })
     function toggleOrden() {

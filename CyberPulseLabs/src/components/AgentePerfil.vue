@@ -2,10 +2,10 @@
     import { onMounted, ref, watch } from 'vue';
     import ActividadAgente from './ActividadAgente.vue';
     import { useEditMode } from '@/composables/editMode';
-import { useEquipos } from '@/stores/Equipos';
-import { useAgentes } from '@/stores/Agentes';
-import { useNotificaciones } from '@/stores/Notificaciones';
-import SelectEquipo from './SelectEquipo.vue';
+    import { useEquipos } from '@/stores/Equipos';
+    import { useAgentes } from '@/stores/Agentes';
+    import { useNotificaciones } from '@/stores/Notificaciones';
+    import SelectEquipo from './SelectEquipo.vue';
 
     const eqStore = useEquipos()
     const agStore = useAgentes()

@@ -1,5 +1,17 @@
+<script setup>
+import AgentePerfil from '@/components/AgentePerfil.vue';
+
+
+
+
+</script>
+
 <template>
 
-    <h2>Vista perfil</h2>
+    <AgentePerfil nombre="hola"></AgentePerfil>
+
+    <div class="rounded-box">
+        <input
+    </div>
 
 </template>
