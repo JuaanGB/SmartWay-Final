@@ -59,17 +59,16 @@ public class AgentesController : ControllerBase
     }
 
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<IEnumerable<AgenteDTO>>> PutAgente(string email, Agente newAg)
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<IEnumerable<AgenteDTO>>> PutAgente(int id, AgenteDTO newAg)
     {
-        if (email != newAg.Email)
+        if (id != newAg.Id)
             return BadRequest();
 
-        var ag = await _context.Agentes.FindAsync(email);
+        var ag = await _context.Agentes.FindAsync(id);
         if (ag == null)
             return NotFound();
 
-        ag.Email = newAg.Email;
         ag.Nombre = newAg.Nombre;
         ag.Activo = newAg.Activo;
         ag.Rango = newAg.Rango;
@@ -79,7 +78,7 @@ public class AgentesController : ControllerBase
         {
             await _context.SaveChangesAsync();
         }
-        catch (DbUpdateConcurrencyException) when (!AgenteExists(email))
+        catch (DbUpdateConcurrencyException) when (!AgenteExists(id))
         {
             return NotFound();
         }
@@ -101,9 +100,9 @@ public class AgentesController : ControllerBase
     }
 
 
-    private bool AgenteExists(string email)
+    private bool AgenteExists(int id)
     {
-        return _context.Agentes.Any(e => e.Email == email);
+        return _context.Agentes.Any(e => e.Id == id);
     }
 
     public static Agente AgenteDTOToAgente(AgenteDTO dto)

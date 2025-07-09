@@ -20,7 +20,7 @@ import { useNotificaciones } from './stores/Notificaciones';
             <RouterLink class="btn btn-primary btn-ghost rounded-xl" to="/agentes">Agentes</RouterLink>
         </Navbar>
     </header>
-    <section>
+    <section class="min-h-screen">
         <RouterView />
     </section>
 

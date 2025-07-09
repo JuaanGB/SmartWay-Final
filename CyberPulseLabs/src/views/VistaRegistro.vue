@@ -35,8 +35,10 @@ async function registrar() {
 	}
 
 	const exito = await api.register(nombre.value, email.value, contraseña.value)
-    if (exito) 
+    if (exito) {
         notiStore.addNotificacion("success", 3000, "Bienvenido.")
+		router.push('/perfil')
+	}
     else
         notiStore.addNotificacion("error", 3000, "Error al hacer el registro.")
 }
@@ -51,7 +53,7 @@ onMounted( () => {
 
 <template>
 
-	<div class="min-h-screen flex items-center justify-center">
+	<div class="flex items-center justify-center mt-10">
 		<main class="m-4 w-7/8 md:w-2xl rounded-box bg-base-200 p-8 shadow-xl flex flex-col gap-4 grid grid-cols-1 lg:grid-cols-2">
 			<h2 class="font-bold col-span-full text-center text-2xl text-primary">Crear cuenta</h2>
 

@@ -7,7 +7,7 @@ export const useAgentes = defineStore('agentes', () => {
 
     const agentes = ref([])
     const api = new API('http://localhost:5152/api/Agentes')
-    const agenteAct = ref({})
+    let agenteAct = ref({})
 
     const ordenInverso = ref(false)
     const agentesOrdenados = computed( () => {

@@ -37,3 +37,17 @@ export async function register(nombre, correo, contraseña) {
     }
     return res.ok
 }
+
+export async function changePassword(id, old, _new) {
+    const item = {agenteId: id, contraseñaAntigua: old, contraseñaNueva: _new}
+
+    let res = await fetch(`${uri}/password/${id}`, {
+        method: "PATCH",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(item)
+    })
+    return res.ok
+}

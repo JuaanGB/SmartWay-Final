@@ -69,6 +69,25 @@ public class AuthController : ControllerBase
         });
     }
 
+    [HttpPatch("password/{id}")]
+    public async Task<IActionResult> Password(int id, [FromBody] PasswordChangeRequest request)
+    {
+        Console.WriteLine(request.AgenteId);
+        if (id != request.AgenteId)
+            return BadRequest();
+
+        var agente = await _context.Agentes.FindAsync(id);
+        var resultado = _hasher.VerifyHashedPassword(agente, agente.Contraseña, request.ContraseñaAntigua);
+
+        if (resultado == PasswordVerificationResult.Failed)
+            return Unauthorized("Credenciales incorrectas");
+
+        agente.Contraseña = _hasher.HashPassword(null, request.ContraseñaNueva);
+        await _context.SaveChangesAsync();
+
+        return Ok();
+    }
+
     [NonAction]
     public string CreateToken(Agente agente)
     {

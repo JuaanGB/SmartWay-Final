@@ -39,7 +39,7 @@ onMounted( () => {
 </script>
 
 <template>
-    <div class="min-h-screen flex items-center justify-center">
+    <div class="flex items-center justify-center mt-10">
         <main class="w-7/8 max-w-md rounded-box bg-base-200 p-8 shadow-xl flex flex-col gap-4">
         
         <!-- Titulo -->

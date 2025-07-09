@@ -18,7 +18,6 @@ public class Agente
     // Nuevos campos para autenticación 
     public string Contraseña { get; set; }
 
-    [Required]
     [EmailAddress]
     public string Email { get; set; }
 }
