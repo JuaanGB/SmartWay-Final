@@ -1,7 +1,11 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using CPLAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 
 namespace CPLAPI.Controllers;
 
@@ -16,7 +20,8 @@ public class AgentesController : ControllerBase
     }
 
     // GET: api/Agentes
-    [HttpGet]
+    [NonAction]
+    [Authorize(Roles = "ADMIN")]
     public async Task<ActionResult<IEnumerable<AgenteDTO>>> GetAgentes()
     {
         return await _context.Agentes
@@ -25,6 +30,22 @@ public class AgentesController : ControllerBase
             .ToListAsync();
     }
 
+    [HttpGet]
+    [Authorize(Roles = "USER")]
+    public async Task<ActionResult<IEnumerable<AgenteDTO>>> GetAgentesCompañeros()
+    {
+        string decoded = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+
+        Agente agente = await _context.Agentes.FindAsync(Request.Headers[HeaderNames.Authorization]);
+        Console.WriteLine(Int32.Parse(ClaimTypes.NameIdentifier));
+
+        return await _context.Agentes
+            .OrderBy(x => x.Nombre)
+            .Select(x => AgenteToDTO(x))
+            .Where(x => x.EquipoId == agente.EquipoId)
+            .ToListAsync();
+    }
+    
     [HttpGet("{id}")]
     public async Task<ActionResult<Agente>> GetAgente(int id)
     {
@@ -51,6 +72,7 @@ public class AgentesController : ControllerBase
         newAg.Contraseña = hasher.HashPassword(newAg, "contraseña");
 
         newAg.Email = newAg.Nombre.ToLower() + "@cyberpulselabs.com";
+        newAg.Rol = "USER";
 
         _context.Agentes.Add(newAg);
         await _context.SaveChangesAsync();

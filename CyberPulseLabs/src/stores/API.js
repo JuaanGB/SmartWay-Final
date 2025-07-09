@@ -8,7 +8,12 @@ export class API {
 
     async _getAll() {
         try {
-            let res = await fetch(this.uri)
+            let res = await fetch(this.uri, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
             return res.json()
         } catch (error) {
             return false
@@ -20,7 +25,8 @@ export class API {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
         })
         return res.json()
@@ -32,7 +38,8 @@ export class API {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
         })
         return await res.json()
@@ -47,7 +54,8 @@ export class API {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(item)
         })
@@ -59,7 +67,8 @@ export class API {
             method: "PATCH",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(item)
         })
@@ -68,7 +77,10 @@ export class API {
 
     async _delete(id) {
         let res = await fetch(`${this.uri}/${id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
         })
         return res
     }

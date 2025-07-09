@@ -86,7 +86,7 @@ onMounted( () => {
 
 			<div class="col-span-full text-gray-500 flex flex-col items-center text-sm mt-2">
 				<span>¿Ya tienes una cuenta?</span>
-				<span>Inicia sesión <RouterLink to="login" class="hover:underline cursor-pointer">aquí</RouterLink></span>
+				<span>Inicia sesión <RouterLink to="login" class="hover:underline cursor-pointer text-primary">aquí</RouterLink></span>
 			</div>
 		</main>
 	</div>

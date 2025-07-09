@@ -60,7 +60,7 @@ onMounted( () => {
         <!-- Acceder a registro -->
         <div class="text-gray-500 flex flex-col items-center text-sm mt-2">
             <span>¿No tienes una cuenta?</span>
-            <span>Crea una <RouterLink class="hover:underline cursor-pointer" to="/register">aquí</RouterLink></span>
+            <span>Crea una <RouterLink class="hover:underline cursor-pointer text-primary" to="/register">aquí</RouterLink></span>
         </div>
 
         </main>

@@ -55,6 +55,7 @@ public class AuthController : ControllerBase
             Activo = true,
             Email = request.Email,
             Contraseña = _hasher.HashPassword(null, request.Contraseña), // Guardamos la contraseña hasheada
+            Rol = "USER"
         };
 
         _context.Agentes.Add(agente);
@@ -98,6 +99,7 @@ public class AuthController : ControllerBase
             Subject = new ClaimsIdentity(new Claim[] {
                 new Claim(ClaimTypes.NameIdentifier, agente.Id.ToString()),
                 new Claim(ClaimTypes.Name, agente.Nombre),
+                new Claim(ClaimTypes.Role, agente.Rol)
             }),
             Expires = DateTime.UtcNow.AddMinutes(3),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),

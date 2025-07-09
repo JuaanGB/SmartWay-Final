@@ -15,6 +15,7 @@ export function useTokenValidation() {
 
         try {
             decoded = jwtDecode(token)
+            console.log(decoded)
             const now = Date.now() / 1000
 
             if (decoded.exp && decoded.exp > now) {

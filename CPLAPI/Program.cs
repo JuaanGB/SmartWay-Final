@@ -67,6 +67,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
+    
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowVueDev", policy =>
