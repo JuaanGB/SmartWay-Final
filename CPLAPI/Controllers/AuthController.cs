@@ -41,7 +41,7 @@ public class AuthController : ControllerBase
         return Ok(new AuthResponse
         {
             Token = token,
-            Email = agente.Email,
+            Id = agente.Id,
             Nombre = agente.Nombre
         });
     }
@@ -64,7 +64,7 @@ public class AuthController : ControllerBase
         return Ok(new AuthResponse
         {
             Token = token,
-            Email = agente.Email,
+            Id = agente.Id,
             Nombre = agente.Nombre
         });
     }
@@ -77,10 +77,10 @@ public class AuthController : ControllerBase
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new Claim[] {
-                new Claim(ClaimTypes.NameIdentifier, agente.Email),
+                new Claim(ClaimTypes.NameIdentifier, agente.Id.ToString()),
                 new Claim(ClaimTypes.Name, agente.Nombre),
             }),
-            Expires = DateTime.UtcNow.AddMinutes(1),
+            Expires = DateTime.UtcNow.AddMinutes(3),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             Issuer = _configuration["Jwt:Issuer"], // Add this line
             Audience = _configuration["Jwt:Audience"]

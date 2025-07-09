@@ -2,48 +2,20 @@
     import { onMounted, ref } from 'vue'
     import { jwtDecode } from 'jwt-decode'
     import router from '@/router'
+import { useTokenValidation } from '@/composables/tokenValidation'
 
     const inicial = ref('?')
-
-    function getDecodedTokenIfValid(token) {
-        if (!token) return null
-
-        try {
-            const decoded = jwtDecode(token)
-            const now = Date.now() / 1000
-
-            if (decoded.exp && decoded.exp > now) {
-                return decoded
-            } else {
-                console.warn('Token expirado.')
-                localStorage.removeItem('token')
-            }
-        } catch (e) {
-            console.warn('Token inválido:', e)
-            localStorage.removeItem('token')
-        }
-
-        return null
-    }
-
+    const tokenValidation = useTokenValidation()
     onMounted(() => {
-        const token = localStorage.getItem("token")
-        const decoded = getDecodedTokenIfValid(token)
-
-        if (decoded) {
-            const nombre = decoded.name || decoded.unique_name || decoded.Nombre || decoded.nombre
-            if (nombre && nombre.length > 0) {
-                inicial.value = nombre.charAt(0).toUpperCase()
-            }
-        }
+        inicial.value = tokenValidation.getUserFirstLetter()
     })
 
     function goToPage() {
-        const token = localStorage.getItem("token")
-        const decoded = getDecodedTokenIfValid(token)
-
-        if (decoded)
+        if (tokenValidation.isValidToken()) {
             router.push('/perfil')
+            inicial.value = tokenValidation.getUserFirstLetter()
+        }
+            
         else {
             router.push('/login')
             inicial.value = '?'

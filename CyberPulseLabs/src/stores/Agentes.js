@@ -7,6 +7,7 @@ export const useAgentes = defineStore('agentes', () => {
 
     const agentes = ref([])
     const api = new API('http://localhost:5152/api/Agentes')
+    const agenteAct = ref({})
 
     const ordenInverso = ref(false)
     const agentesOrdenados = computed( () => {
@@ -27,6 +28,16 @@ export const useAgentes = defineStore('agentes', () => {
         if (res != false)
             setAgentes(res)
         return res
+    }
+
+    async function setAgenteAct(id) {
+        if (id == null) return
+        let ag = agentes.value.find( a => a.id == id)
+        console.log(ag)
+        if (!ag) {
+            ag = await api._get(id)
+        }
+        agenteAct.value = ag
     }
 
     async function getCount() {
@@ -81,7 +92,7 @@ export const useAgentes = defineStore('agentes', () => {
         }
     }
 
-    return {agentes, agentesOrdenados, getAllAgentes, getCount, createAgente, countStatus, toggleOrden,
+    return {agentes, agentesOrdenados, agenteAct, setAgenteAct, getAllAgentes, getCount, createAgente, countStatus, toggleOrden,
         deleteAgente, updateAgente
     }
 })

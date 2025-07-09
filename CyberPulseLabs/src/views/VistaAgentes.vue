@@ -38,7 +38,7 @@ onMounted(async () => {
         <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-10">
           <AgentePerfilNuevo class="mx-auto"></AgentePerfilNuevo>
           <AgentePerfil class="mx-auto" v-for="ag in agStore.agentesOrdenados" :key="ag.id" :id="ag.id" :activo="ag.activo" 
-            :nombre="ag.nombre" :rango="ag.rango" :equipo-id="ag.equipoId"></AgentePerfil>
+            :nombre="ag.nombre" :rango="ag.rango" :equipo-id="ag.equipoId" :editable="true"></AgentePerfil>
         </div>
       </div>
       

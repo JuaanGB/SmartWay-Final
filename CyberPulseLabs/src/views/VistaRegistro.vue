@@ -1,9 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router';
 import * as api from '@/stores/Auth'
 import { useNotificaciones } from '@/stores/Notificaciones'
 import InputContraseña from '@/components/InputContraseña.vue'
+import { useTokenValidation } from '@/composables/tokenValidation';
+import router from '@/router';
 
 const notiStore = useNotificaciones()
 
@@ -14,10 +16,7 @@ const contraseña = ref('')
 const contraseña2 = ref('')
 
 const terminos = ref(false)
-
-function toggleContraseña() {
-  mostrar.value = !mostrar.value
-}
+const tokenValidation = useTokenValidation()
 
 async function registrar() {
 	if (!nombre.value || !email.value || !contraseña.value || !contraseña2.value) {
@@ -41,6 +40,12 @@ async function registrar() {
     else
         notiStore.addNotificacion("error", 3000, "Error al hacer el registro.")
 }
+
+onMounted( () => {
+    if (tokenValidation.isValidToken()) {
+        router.push('/perfil')
+    }
+})
 
 </script>
 

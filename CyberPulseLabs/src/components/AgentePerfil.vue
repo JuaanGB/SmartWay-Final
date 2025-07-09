@@ -11,7 +11,7 @@
     const agStore = useAgentes()
     const notiStore = useNotificaciones()
 
-    const props = defineProps(['id','nombre','rango','activo','equipoId'])
+    const props = defineProps(['id','nombre','rango','activo','equipoId','editable'])
     const { editModeActive, toggleEditMode } = useEditMode(() => {
         nuevoNombre.value = props.nombre
         nuevoRango.value = props.rango
@@ -125,10 +125,10 @@
 
                 <div class="flex flex-col items-center gap-2">
                     <!-- Equipo -->
-                    <SelectEquipo @update-nuevo-equipo="(id) => updateNuevoEquipo(id)" class="select-sm" :default="nuevoEquipoNombre"></SelectEquipo>
+                    <SelectEquipo :disabled="!props.editable" @update-nuevo-equipo="(id) => updateNuevoEquipo(id)" class="select-sm" :default="nuevoEquipoNombre"></SelectEquipo>
 
                     <!-- Rango -->
-                    <input class="input input-sm w-full" type="text" v-model="nuevoRango" placeholder="Rango">
+                    <input :disabled="!props.editable" class="input input-sm w-full" type="text" v-model="nuevoRango" placeholder="Rango">
                 </div>
 
                 <!-- Botón de guardar cambios -->

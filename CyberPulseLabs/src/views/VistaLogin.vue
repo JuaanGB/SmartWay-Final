@@ -1,13 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import * as api from '@/stores/Auth'
 import { useNotificaciones } from '@/stores/Notificaciones'
 import router from '@/router'
 import InputContraseña from '@/components/InputContraseña.vue'
+import { useTokenValidation } from '@/composables/tokenValidation'
 
 const notiStore = useNotificaciones()
 
-const mostrar = ref(false)
+const tokenValidation = useTokenValidation()
 const email = ref('')
 const contraseña = ref('')
 
@@ -24,6 +25,17 @@ async function iniciarSesion() {
     } else
         notiStore.addNotificacion("error", 3000, "Credenciales incorrectas.")
 }
+
+function completarCorreo() {
+    if (email.value && !email.value.includes('@'))
+        email.value += "@cyberpulselabs.com"
+}
+
+onMounted( () => {
+    if (tokenValidation.isValidToken()) {
+        router.push('/perfil')
+    }
+})
 </script>
 
 <template>
@@ -36,7 +48,7 @@ async function iniciarSesion() {
         <!-- Email -->
         <fieldset class="fieldset">
             <legend class="fieldset-legend">Correo electrónico</legend>
-            <input v-model="email" type="email" class="input w-full" placeholder="agente@cybperpulselabs.com" />
+            <input v-model="email" :onblur="completarCorreo" type="email" class="input w-full" placeholder="agente@cybperpulselabs.com" />
         </fieldset>
 
         <!-- Contraseña -->
