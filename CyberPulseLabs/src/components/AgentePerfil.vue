@@ -127,10 +127,10 @@
 
                 <div class="flex flex-col items-center gap-2">
                     <!-- Equipo -->
-                    <SelectEquipo :disabled="!props.editable" @update-nuevo-equipo="(id) => updateNuevoEquipo(id)" class="select-sm" :default="nuevoEquipoNombre"></SelectEquipo>
+                    <SelectEquipo :disabled="!props.editable || !sesion.isAdmin" @update-nuevo-equipo="(id) => updateNuevoEquipo(id)" class="select-sm" :default="nuevoEquipoNombre"></SelectEquipo>
 
                     <!-- Rango -->
-                    <input :disabled="!props.editable" class="input input-sm w-full" type="text" v-model="nuevoRango" placeholder="Rango">
+                    <input :disabled="!props.editable || !sesion.isAdmin" class="input input-sm w-full" type="text" v-model="nuevoRango" placeholder="Rango">
                 </div>
 
                 <!-- Botón de guardar cambios -->

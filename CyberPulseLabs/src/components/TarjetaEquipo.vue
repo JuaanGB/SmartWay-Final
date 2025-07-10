@@ -5,6 +5,7 @@ import { useEquipos } from '@/stores/Equipos';
 import { useNotificaciones } from '@/stores/Notificaciones';
 import MedallaOperacion from './MedallaOperacion.vue';
 import { useEditMode } from '@/composables/editMode';
+import { useSesion } from '@/stores/Sesion';
 
     const props = defineProps(['id', 'nombre', 'especialidad', 'operacionid', 'agentes'])
 
@@ -12,6 +13,7 @@ import { useEditMode } from '@/composables/editMode';
 
     const equipoStore = useEquipos()
     const notiStore = useNotificaciones()
+    const sesion = useSesion()
 
     const nuevoNombre = ref(props.nombre)
     const nuevaEspecialidad = ref(props.especialidad)
@@ -60,7 +62,7 @@ import { useEditMode } from '@/composables/editMode';
 
 <template>
 
-    <div class="join max-xl:join-vertical max-sm:w-full h-auto">
+    <div class="join max-xl:join-vertical max-sm:w-full h-fit">
         <div class="card card-secondary shadow-md bg-base-200 flex-row join-item w-full md:w-90">
             <div class="card-body w-full">
                 <!-- Información siempre visible -->
@@ -68,10 +70,10 @@ import { useEditMode } from '@/composables/editMode';
 
                     <!-- Botones de edición y miembros -->
                     <div class="flex flex-row gap-1 ml-auto mb-2">
-                        <button class="btn btn-circle btn-secondary btn-sm" @click="toggleEditMode">
+                        <button v-if="sesion.isAdmin" class="btn btn-circle btn-secondary btn-sm" @click="toggleEditMode">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><!-- Icon from HeroIcons by Refactoring UI Inc - https://github.com/tailwindlabs/heroicons/blob/master/LICENSE --><path fill="currentColor" fill-rule="evenodd" d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.8 2.8 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.8 2.8 0 0 1 .596-.892z" clip-rule="evenodd"/></svg>
                         </button>
-                        <button class="btn btn-circle btn-secondary btn-sm" @click="deleteOperacion">
+                        <button v-if="sesion.isAdmin" class="btn btn-circle btn-secondary btn-sm" @click="deleteOperacion">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z"/></svg>
                         </button>
                         <button class="btn btn-circle btn-secondary btn-sm" @click="toggleMembers">
