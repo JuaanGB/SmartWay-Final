@@ -1,33 +1,23 @@
 <script setup>
 import AgentePerfil from '@/components/AgentePerfil.vue';
 import InputContraseña from '@/components/InputContraseña.vue';
-import { useTokenValidation } from '@/composables/tokenValidation';
 import router from '@/router';
-import { useAgentes } from '@/stores/Agentes';
 import { useNotificaciones } from '@/stores/Notificaciones';
-import { onBeforeMount, onMounted, ref } from 'vue';
-import { changePassword } from '@/stores/Auth';
+import { onBeforeMount, ref } from 'vue';
+import { useSesion } from '@/stores/Sesion';
 
-let id = null
 const oldPassword = ref('')
 const newPassword = ref('')
-const tokenValidation = useTokenValidation()
+
 const notiStore = useNotificaciones()
-const agStore = useAgentes()
-
-
-onMounted( () => {
-    if (!tokenValidation.isValidToken()) {
-        notiStore.addNotificacion("error", 3000, "La sesión iniciada ha expirado.")
-        router.push('/login')
-    }
-})
-
+const sesion = useSesion()
 
 onBeforeMount( () => {
-    if (tokenValidation.isValidToken()) {
-        id = tokenValidation.getUserId()
-        agStore.setAgenteAct(id)
+    if (!sesion.isValidToken) {
+        notiStore.addNotificacion("error", 3000, "La sesión iniciada ha expirado.")
+        router.push('/login')
+    } else {
+        sesion.setAgenteAct()
     }
 })
 
@@ -40,7 +30,8 @@ async function cambiarContraseña() {
         return
     }
 
-    let exito = await changePassword(id, oldPassword.value, newPassword.value)
+    console.log(oldPassword.value, newPassword.value)
+    let exito = await sesion.changePassword(oldPassword.value, newPassword.value)
     if (exito) {
         notiStore.addNotificacion("success", 3000, "Contraseña cambiada con éxito.")
         flushInputs()
@@ -55,7 +46,7 @@ function flushInputs() {
 }
 
 async function cerrarSesion() {
-    localStorage.removeItem("token")
+    sesion.logout()
     router.push('login')
     notiStore.addNotificacion("success", 3000, "Sesión cerrada correctamente.")
 }
@@ -66,11 +57,11 @@ async function cerrarSesion() {
 
     <main class="grid grid-cols-1 md:grid-cols-[200px_500px] gap-2 m-10 justify-center content-center">
         <AgentePerfil class="mx-auto"
-            :id="agStore.agenteAct?.id || null"
-            :nombre="agStore.agenteAct?.nombre || 'Usuario no identificado'" 
-            :activo="agStore.agenteAct?.activo || false"
-            :equipo-id="agStore.agenteAct?.equipoId || null"
-            :rango="agStore.agenteAct?.rango || null"
+            :id="sesion.agenteId"
+            :nombre="sesion.agenteNombre"
+            :activo="sesion.agenteActivo"
+            :equipoId="sesion.agenteEquipoId"
+            :rango="sesion.agenteRango"
             :editable="false">
         </AgentePerfil>
 

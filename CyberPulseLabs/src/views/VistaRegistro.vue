@@ -1,22 +1,20 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { RouterLink } from 'vue-router';
-import * as api from '@/stores/Auth'
 import { useNotificaciones } from '@/stores/Notificaciones'
 import InputContraseña from '@/components/InputContraseña.vue'
-import { useTokenValidation } from '@/composables/tokenValidation';
 import router from '@/router';
+import { useSesion } from '@/stores/Sesion';
 
 const notiStore = useNotificaciones()
+const sesion = useSesion()
 
-const mostrar = ref(false)
 const nombre = ref('')
 const email = ref('')
 const contraseña = ref('')
 const contraseña2 = ref('')
 
 const terminos = ref(false)
-const tokenValidation = useTokenValidation()
 
 async function registrar() {
 	if (!nombre.value || !email.value || !contraseña.value || !contraseña2.value) {
@@ -34,7 +32,7 @@ async function registrar() {
 		return
 	}
 
-	const exito = await api.register(nombre.value, email.value, contraseña.value)
+	const exito = await sesion.register(nombre.value, email.value, contraseña.value)
     if (exito) {
         notiStore.addNotificacion("success", 3000, "Bienvenido.")
 		router.push('/perfil')
@@ -43,8 +41,8 @@ async function registrar() {
         notiStore.addNotificacion("error", 3000, "Error al hacer el registro.")
 }
 
-onMounted( () => {
-    if (tokenValidation.isValidToken()) {
+onBeforeMount( () => {
+    if (sesion.isValidToken) {
         router.push('/perfil')
     }
 })

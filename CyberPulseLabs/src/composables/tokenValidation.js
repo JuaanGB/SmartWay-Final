@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode"
 
 export function useTokenValidation() {
 
-    const token = localStorage.getItem("token")
+    const token = null
     let decoded = null
 
     function hasToken() {
@@ -11,23 +11,31 @@ export function useTokenValidation() {
     }
 
     function isValidToken() {
-        if (!hasToken()) return false
-
-        try {
-            decoded = jwtDecode(token)
-            console.log(decoded)
-            const now = Date.now() / 1000
-
-            if (decoded.exp && decoded.exp > now) {
-                return true
-            } else {
-                localStorage.removeItem("token")
-                return false
-            }
-        } catch (e) {
-            localStorage.removeItem("token")
-            return false
+        let res = false
+        if (!hasToken()) {
+            console.log("if")
+            res = false
         }
+        else {
+            try {
+                console.log(token)
+                decoded = jwtDecode(token)
+                console.log(decoded)
+                const now = Date.now() / 1000
+
+                if (decoded.exp && decoded.exp > now) {
+                    res = true
+                } else {
+                    localStorage.removeItem("token")
+                    res = false
+                }
+            } catch (e) {
+                localStorage.removeItem("token")
+                res = false
+            }
+        }
+        console.log(res)
+        return res
     }
 
     function getUserFirstLetter() {
@@ -42,5 +50,5 @@ export function useTokenValidation() {
         return decoded.nameid
     }
 
-    return {decoded, getUserId, hasToken, isValidToken, getUserFirstLetter}
+    return {token, decoded, getUserId, hasToken, isValidToken, getUserFirstLetter}
 }

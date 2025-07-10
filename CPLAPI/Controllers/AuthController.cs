@@ -101,7 +101,7 @@ public class AuthController : ControllerBase
                 new Claim(ClaimTypes.Name, agente.Nombre),
                 new Claim(ClaimTypes.Role, agente.Rol)
             }),
-            Expires = DateTime.UtcNow.AddMinutes(3),
+            Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             Issuer = _configuration["Jwt:Issuer"], // Add this line
             Audience = _configuration["Jwt:Audience"]

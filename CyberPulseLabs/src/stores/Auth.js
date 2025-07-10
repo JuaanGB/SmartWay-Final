@@ -1,6 +1,6 @@
 const uri = 'http://localhost:5152/api/Auth'
 
-export async function login(email, contraseña) {
+export async function _login(email, contraseña) {
     const item = { email, contraseña }
 
     let res = await fetch(`${uri}/login`, {
@@ -19,7 +19,7 @@ export async function login(email, contraseña) {
     return res.ok
 }
 
-export async function register(nombre, correo, contraseña) {
+export async function _register(nombre, correo, contraseña) {
     const item = { nombre, email: correo, contraseña }
 
     let res = await fetch(`${uri}/register`, {
@@ -38,7 +38,7 @@ export async function register(nombre, correo, contraseña) {
     return res.ok
 }
 
-export async function changePassword(id, old, _new) {
+export async function _changePassword(id, old, _new) {
     const item = {agenteId: id, contraseñaAntigua: old, contraseñaNueva: _new}
 
     let res = await fetch(`${uri}/password/${id}`, {

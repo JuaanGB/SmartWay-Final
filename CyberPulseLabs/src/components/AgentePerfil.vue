@@ -23,7 +23,7 @@
     const nuevoRango = ref(props.rango)
     const nuevoEstado = ref(props.activo)
     const nuevoEquipoId = ref(props.equipoId)
-    const inicial = computed( () => {return nuevoNombre.value[0]})
+    const inicial = computed(() => nuevoNombre.value?.charAt(0)?.toUpperCase() || '?')
 
     const nuevoEquipoNombre = ref('Equipo')
 

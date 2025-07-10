@@ -19,33 +19,47 @@ public class AgentesController : ControllerBase
         _context = context;
     }
 
-    // GET: api/Agentes
-    [NonAction]
-    [Authorize(Roles = "ADMIN")]
+    // GET: api/Agentes.
+    // USO: Listar agentes en la vista de agentes
+    [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<AgenteDTO>>> GetAgentes()
     {
-        return await _context.Agentes
-            .OrderBy(x => x.Nombre)
-            .Select(x => AgenteToDTO(x))
-            .ToListAsync();
+        var rol = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+        var id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(rol) || string.IsNullOrEmpty(id))
+            return Unauthorized("Necesitas estar autenticado.");
+
+        if (rol == "ADMIN") // Devolvemos todos los usuarios
+        {
+            return await _context.Agentes
+                .OrderBy(x => x.Nombre)
+                .Select(x => AgenteToDTO(x))
+                .ToListAsync();
+        }
+        else if (rol == "USER") // Devolvemos solo los que tengan que ver con el agente
+        {
+            int agenteId = int.Parse(id);
+            var agente = await _context.Agentes.FindAsync(agenteId);
+
+            if (agente == null) return NotFound();
+
+            return await _context.Agentes
+                .Where(x => x.EquipoId == agente.EquipoId)
+                .OrderBy(x => x.Nombre)
+                .Select(x => AgenteToDTO(x))
+                .ToListAsync();
+        }
+        else
+        {
+            return Forbid();
+        }
+            
     }
 
-    [HttpGet]
-    [Authorize(Roles = "USER")]
-    public async Task<ActionResult<IEnumerable<AgenteDTO>>> GetAgentesCompañeros()
-    {
-        string decoded = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-
-        Agente agente = await _context.Agentes.FindAsync(Request.Headers[HeaderNames.Authorization]);
-        Console.WriteLine(Int32.Parse(ClaimTypes.NameIdentifier));
-
-        return await _context.Agentes
-            .OrderBy(x => x.Nombre)
-            .Select(x => AgenteToDTO(x))
-            .Where(x => x.EquipoId == agente.EquipoId)
-            .ToListAsync();
-    }
-    
+    // USO: Obtener el agente al hacer login.
+    // Debe tener acceso todo el mundo.
     [HttpGet("{id}")]
     public async Task<ActionResult<Agente>> GetAgente(int id)
     {
@@ -56,14 +70,20 @@ public class AgentesController : ControllerBase
         return ag;
     }
 
+    // USO: Vista principal para obtener número de op/eq/ag
+    // Mejor limitado a alguien con rol.
     [HttpGet("count")]
+    [Authorize(Roles = "ADMIN")]
     public async Task<ActionResult<int>> GetAgentesCount()
     {
         int count = await _context.Agentes.CountAsync();
         return count;
     }
 
+    // USO: Crear agente desde la vista de agentes. 
+    // Limitado a rol ADMIN
     [HttpPost]
+    [Authorize(Roles = "ADMIN")]
     public async Task<ActionResult<IEnumerable<AgenteDTO>>> PostAgente(AgenteDTO ag)
     {
         var newAg = AgenteDTOToAgente(ag);
@@ -80,13 +100,28 @@ public class AgentesController : ControllerBase
         return await GetAgentes();
     }
 
-
+    // USO: Editar agente, desde vista de agentes o perfil.
+    // ADMIN en vista de agentes, USER en perfil.
     [HttpPatch("{id}")]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<AgenteDTO>>> PutAgente(int id, AgenteDTO newAg)
     {
         if (id != newAg.Id)
-            return BadRequest();
+            return BadRequest("El ID del cuerpo no coincide con el de la URL.");
 
+        var rol = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+        var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(rol) || string.IsNullOrEmpty(userIdClaim))
+            return Unauthorized("No se pudo identificar al usuario.");
+
+        int userId = int.Parse(userIdClaim);
+
+        // Si es USER, solo puede editarse a sí mismo
+        if (rol == "USER" && id != userId)
+            return Forbid();
+
+        // ADMIN puede editar a cualquier agente
         var ag = await _context.Agentes.FindAsync(id);
         if (ag == null)
             return NotFound();
@@ -108,7 +143,11 @@ public class AgentesController : ControllerBase
         return await GetAgentes();
     }
 
+
+    // USO: Borrar agentes dándole al icono de la papelera.
+    // Limitado a admin.
     [HttpDelete("{id}")]
+    [Authorize(Roles = "ADMIN")]
     public async Task<ActionResult<IEnumerable<AgenteDTO>>> DeleteAgente(int id)
     {
         var ag = await _context.Agentes.FindAsync(id);

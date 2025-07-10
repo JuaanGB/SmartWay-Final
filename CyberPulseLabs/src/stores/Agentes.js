@@ -88,7 +88,8 @@ export const useAgentes = defineStore('agentes', () => {
             nombre: nombre,
             activo: estado,
             equipoId: equipoId,
-            rango: rango
+            rango: rango,
+            rol: "USER"
         }
     }
 

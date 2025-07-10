@@ -1,14 +1,13 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import * as api from '@/stores/Auth'
+import { onBeforeMount, ref } from 'vue'
 import { useNotificaciones } from '@/stores/Notificaciones'
 import router from '@/router'
 import InputContraseña from '@/components/InputContraseña.vue'
-import { useTokenValidation } from '@/composables/tokenValidation'
+import { useSesion } from '@/stores/Sesion'
 
 const notiStore = useNotificaciones()
+const sesion = useSesion()
 
-const tokenValidation = useTokenValidation()
 const email = ref('')
 const contraseña = ref('')
 
@@ -18,7 +17,7 @@ async function iniciarSesion() {
         return
     }
 
-    const exito = await api.login(email.value, contraseña.value)
+    const exito = await sesion.login(email.value, contraseña.value)
     if (exito) {
         notiStore.addNotificacion("success", 3000, "Bienvenido.")
         router.push('/perfil')
@@ -31,8 +30,8 @@ function completarCorreo() {
         email.value += "@cyberpulselabs.com"
 }
 
-onMounted( () => {
-    if (tokenValidation.isValidToken()) {
+onBeforeMount( () => {
+    if (sesion.isValidToken) {
         router.push('/perfil')
     }
 })
