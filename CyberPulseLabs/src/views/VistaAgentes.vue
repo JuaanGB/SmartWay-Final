@@ -3,10 +3,12 @@ import AgentePerfil from '@/components/AgentePerfil.vue';
 import AgentePerfilNuevo from '@/components/AgentePerfilNuevo.vue';
 import { useAgentes } from '@/stores/Agentes';
 import { useEquipos } from '@/stores/Equipos';
+import { useSesion } from '@/stores/Sesion';
 import { onMounted, watch } from 'vue';
 
 const eqStore = useEquipos()
 const agStore = useAgentes()
+const sesion = useSesion()
 
 onMounted(async () => {
   agStore.getAllAgentes()
@@ -25,6 +27,16 @@ onMounted(async () => {
       </p>
     </div>
 
+    <div class="rounded-box p-4 lg:w-3/4 w-full bg-base-300 flex flex-col items-center gap-2 shadow-md shadow-primary">
+      <h2 class="text-3xl font-bold">{{ "Rol: " + (sesion.isAdmin ? "ADMIN" : 'USER') }}</h2>
+      <p v-if="sesion.isAdmin" class="text-center">
+        Puedes crear nuevos agentes, eliminar agentes existentes y editar a todos los agentes.
+      </p>
+      <p v-else>
+        Solamente puedes editarte a ti mismo y visualizar a los agentes que son compañeros (compartes equipo con ellos).
+      </p>
+    </div>
+
     <div class="rounded-box lg:w-3/4 w-full relative px-10 pb-10 bg-base-300 flex flex-col items-center gap-10 shadow-md shadow-primary">
       <h2 class="text-3xl font-bold mt-8">Listado de agentes</h2>
 
@@ -36,7 +48,7 @@ onMounted(async () => {
       
       <div class="overflow-x-auto overflow-y-auto w-full h-80">
         <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-10">
-          <AgentePerfilNuevo class="mx-auto"></AgentePerfilNuevo>
+          <AgentePerfilNuevo v-if="sesion.isAdmin" class="mx-auto"></AgentePerfilNuevo>
           <AgentePerfil class="mx-auto" v-for="ag in agStore.agentesOrdenados" :key="ag.id" :id="ag.id" :activo="ag.activo" 
             :nombre="ag.nombre" :rango="ag.rango" :equipo-id="ag.equipoId" :editable="true"></AgentePerfil>
         </div>

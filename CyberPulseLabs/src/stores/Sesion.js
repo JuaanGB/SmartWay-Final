@@ -14,6 +14,7 @@ export const useSesion = defineStore('sesion', () => {
     const agenteRango = computed(() => agenteAct.value?.rango || '')
     const agenteEquipoId = computed(() => agenteAct.value?.equipoId || '')
     const agenteActivo = computed(() => agenteAct.value?.activo ?? false)
+    const isAdmin = computed(() => agenteAct.value?.rol == "ADMIN" ?? false)
 
     const apiAg = new API('http://localhost:5152/api/Agentes')
 
@@ -107,5 +108,6 @@ export const useSesion = defineStore('sesion', () => {
         agenteRango,
         agenteEquipoId,
         agenteActivo,
+        isAdmin
     }
 })
