@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  frontend:
+    image: node:18.19.1-alpine3.19
+    ports: 
+      - 8000:8000
+    volumes:
+      - type: bind
+        source: ./CyberPulseLabs
+        target: /app
+
+    working_dir: /app
+    command: npm run dev
+
+  backend:
+    image: 

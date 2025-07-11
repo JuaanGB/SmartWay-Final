@@ -4,7 +4,6 @@ import AvatarLogin from './AvatarLogin.vue';
 import MenuNavegacion from './MenuNavegacion.vue';
 
     const props = defineProps(['titulo'])
-    const mobileMenuVisible = ref(false)
 
     function cambiarTema() {
         const html = document.documentElement;
@@ -19,10 +18,6 @@ import MenuNavegacion from './MenuNavegacion.vue';
             html.setAttribute("data-theme", "acid")
             localStorage.theme = "acid"
         }
-    }
-
-    function toggleMenuMobile() {
-        mobileMenuVisible.value = !mobileMenuVisible.value
     }
 
     onMounted( () => {
