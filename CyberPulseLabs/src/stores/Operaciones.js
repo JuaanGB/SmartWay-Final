@@ -78,7 +78,12 @@ export const useOperaciones = defineStore('operaciones', () => {
         return false	
     }
     function $patchOperaciones(res) {
-        operaciones.value = res
+        if (Array.isArray(res))
+            operaciones.value = res
+        else operaciones.value = [res]
+    }
+    function flushOperaciones() {
+        operaciones.value = []
     }
     function attributesToItem(id, nombre, estado, inicio, fin) {
         return {
@@ -91,5 +96,5 @@ export const useOperaciones = defineStore('operaciones', () => {
     }
 
     return {operaciones, operacionAct, filterOperaciones, getOperacion, getCount, countStatus,
-            getAllOperaciones, createOperacion, deleteOperacion, updateOperaciones}
+            getAllOperaciones, createOperacion, deleteOperacion, updateOperaciones, flushOperaciones}
 })

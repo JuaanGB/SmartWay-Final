@@ -4,6 +4,7 @@
     import { ref, watch } from 'vue';
 import MedallaEstado from './MedallaEstado.vue';
 import { useEditMode } from '@/composables/editMode';
+import { useSesion } from '@/stores/Sesion';
 
     const props = defineProps(['id', 'nombre', 'estado', 'inicio', 'fin'])
     let nuevoNombre = props.nombre
@@ -13,6 +14,7 @@ import { useEditMode } from '@/composables/editMode';
 
     const opStore = useOperaciones()
     const notiStore = useNotificaciones()
+    const sesion = useSesion()
 
     const {editModeActive, toggleEditMode} = useEditMode(() => {
         nuevoNombre = props.nombre
@@ -52,7 +54,7 @@ import { useEditMode } from '@/composables/editMode';
 <template>
 
     <tr :class="{'bg-success': editModeActive}" class="bg-base-100">
-        <th>
+        <th v-if="sesion.isAdmin">
             <!-- Botones edición no activa -->
             <div v-if="!editModeActive">
                 <button class="btn btn-primary btn-outline rounded-md" @click="toggleEditMode">
@@ -108,5 +110,9 @@ import { useEditMode } from '@/composables/editMode';
     padding: 4px;
     margin-left: 4px;
     margin-right: 4px;
+}
+
+input, select {
+    color: var(--color-base-content);
 }
 </style>

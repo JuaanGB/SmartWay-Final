@@ -49,8 +49,12 @@
         if (nuevoEquipoNombre.value)
             nuevoEquipoNombre.value = (await eqStore.getEquipo(nuevoEquipoId.value)).nombre
         
-        if (exito)
+        if (exito) {
             notiStore.addNotificacion("success", 3000, "Agente actualizado correctamente.")
+            if (props.id == sesion.userId) {
+                sesion.setAgenteAct() // Para mantener el agente actualizado en local
+            }
+        }
         else 
             notiStore.addNotificacion("error", 3000, "Error al actualizar la operación.")
 

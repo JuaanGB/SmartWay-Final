@@ -64,6 +64,11 @@ export const useEquipos = defineStore('equipos', () => {
     function setEquipos(res) {
         equipos.value = res
     }
+
+    function flushEquipos() {
+        equipos.value = []
+    }
+
     function attributesToItem(id, nombre, especialidad, operacionID) {
         const equipo = {
             id: id,
@@ -75,5 +80,6 @@ export const useEquipos = defineStore('equipos', () => {
     }
 
     return {equipos, loadingAllEquipos, getAllEquipos, getEquipo, getCount, countStatus,
-        createEquipo, deleteEquipo, updateEquipo}
+        createEquipo, deleteEquipo, updateEquipo, flushEquipos
+    }
 })

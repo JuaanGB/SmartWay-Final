@@ -82,6 +82,10 @@ export const useAgentes = defineStore('agentes', () => {
         agentes.value = res
     }
 
+    function flushAgentes() {
+        agentes.value = []
+    }
+
     function attributesToItem(id, nombre, estado, equipoId, rango) {
         return {
             id: id,
@@ -94,6 +98,6 @@ export const useAgentes = defineStore('agentes', () => {
     }
 
     return {agentes, agentesOrdenados, agenteAct, setAgenteAct, getAllAgentes, getCount, createAgente, countStatus, toggleOrden,
-        deleteAgente, updateAgente
+        deleteAgente, updateAgente, flushAgentes
     }
 })
