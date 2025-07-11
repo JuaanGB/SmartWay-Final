@@ -46,6 +46,9 @@ const router = createRouter({
       component: VistaPerfil,
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    return {top: 0}
+  }
 })
 
 export default router
