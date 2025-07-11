@@ -13,4 +13,14 @@ services:
     command: npm run dev
 
   backend:
-    image: 
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    ports: 
+      - 80:80
+    volumes:
+      - ./CPLAPI:/api
+
+    working_dir: /api
+    command:
+      - dotnet restore /api/CPLAPI.csproj
+      - dotnet watch
+
