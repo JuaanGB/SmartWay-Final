@@ -15,12 +15,9 @@ services:
   backend:
     image: mcr.microsoft.com/dotnet/sdk:8.0
     ports: 
-      - 80:80
+      - 5152:5152
     volumes:
-      - ./CPLAPI:/api
-
-    working_dir: /api
-    command:
-      - dotnet restore /api/CPLAPI.csproj
-      - dotnet watch
+      - ./CPLAPI/:/api
+    working_dir: /api/
+    command: sh -c "dotnet restore CPLAPI.csproj && dotnet run"
 

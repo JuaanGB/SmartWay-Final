@@ -1,4 +1,4 @@
-const uri = 'http://localhost:5152/api/Auth'
+const uri = 'http://192.168.0.52:5152/api/Auth'
 
 export async function _login(email, contraseña) {
     const item = { email, contraseña }
